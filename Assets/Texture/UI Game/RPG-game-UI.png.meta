@@ -1,0 +1,220 @@
+fileFormatVersion: 2
+guid: fb88c4cc983e0e94d9e1d7d8f832a3b3
+timeCreated: 1469121884
+licenseType: Pro
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: RPG-game-UI_0
+    21300002: RPG-game-UI_1
+    21300004: RPG-game-UI_2
+    21300006: RPG-game-UI_3
+    21300008: RPG-game-UI_4
+    21300010: RPG-game-UI_5
+    21300012: RPG-game-UI_6
+    21300014: RPG-game-UI_7
+    21300016: RPG-game-UI_8
+    21300018: RPG-game-UI_9
+    21300020: RPG-game-UI_10
+    21300022: RPG-game-UI_11
+    21300024: RPG-game-UI_12
+    21300026: RPG-game-UI_13
+    21300028: RPG-game-UI_14
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 512
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: RPG-game-UI_0
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 420
+        width: 291
+        height: 23
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: RPG-game-UI_1
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 398
+        width: 116
+        height: 123
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: RPG-game-UI_2
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 315
+        width: 263
+        height: 79
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: RPG-game-UI_3
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 313
+        width: 263
+        height: 77
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: RPG-game-UI_4
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 218
+        width: 263
+        height: 79
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: RPG-game-UI_5
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 219
+        width: 263
+        height: 77
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: RPG-game-UI_6
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 167
+        width: 567
+        height: 27
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: RPG-game-UI_7
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 104
+        width: 36
+        height: 29
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: RPG-game-UI_8
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 99
+        width: 42
+        height: 37
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: RPG-game-UI_9
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 0
+        width: 279
+        height: 145
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: RPG-game-UI_10
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 71
+        width: 68
+        height: 58
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: RPG-game-UI_11
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 38
+        width: 83
+        height: 40
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: RPG-game-UI_12
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 24
+        width: 66
+        height: 66
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: RPG-game-UI_13
+      rect:
+        serializedVersion: 2
+        x: 488
+        y: 34
+        width: 61
+        height: 25
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: RPG-game-UI_14
+      rect:
+        serializedVersion: 2
+        x: 498
+        y: 417
+        width: 75
+        height: 77
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
