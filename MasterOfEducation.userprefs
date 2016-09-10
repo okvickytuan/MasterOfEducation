@@ -1,0 +1,17 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\Animal\Animal.cs">
+    <Files>
+      <File FileName="Assets\Script\GameController.cs" Line="30" Column="39" />
+      <File FileName="Assets\Script\Camera\CameraPlayer.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\Network\Photon Cloud\PUNManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\Player\PlayerAnimation.cs" Line="1" Column="1" />
+      <File FileName="Assets\Photon Unity Networking\UtilityScripts\ConnectAndJoinRandom.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\Animal\Animal.cs" Line="27" Column="21" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

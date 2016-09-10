@@ -249,7 +249,9 @@
      <Compile Include="Assets\PhotonChatApi\ChatState.cs" />
      <Compile Include="Assets\PhotonChatApi\ChatUserStatus.cs" />
      <Compile Include="Assets\PhotonChatApi\IChatClientListener.cs" />
+     <Compile Include="Assets\Script\Animal\Animal.cs" />
      <Compile Include="Assets\Script\Camera\CameraPlayer.cs" />
+     <Compile Include="Assets\Script\GameController.cs" />
      <Compile Include="Assets\Script\InputManager\TouchHandle.cs" />
      <Compile Include="Assets\Script\Network\Photon Cloud\PUNManager.cs" />
      <Compile Include="Assets\Script\Player\PlayerAnimation.cs" />

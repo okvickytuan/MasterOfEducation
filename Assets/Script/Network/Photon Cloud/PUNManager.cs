@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PUNManager : ConnectAndJoinRandom {
 
 	internal static PUNManager _instance;
 
 	public GameObject player;
+	public Image[] playerArrImg = new Image[4];
 
 	private bool joinedRoom = false;
 	private int playerIndex = 0;
@@ -21,7 +23,7 @@ public class PUNManager : ConnectAndJoinRandom {
 	// Use this for initialization
 	public override void Start () {
 		base.Start ();
-		DontDestroyOnLoad (gameObject);
+		DontDestroyOnLoad (this);
 		_view = GetComponent<PhotonView> ();
 
 		PhotonNetwork.automaticallySyncScene = true;
@@ -33,6 +35,16 @@ public class PUNManager : ConnectAndJoinRandom {
 
 	}
 
+	public override void OnConnectedToMaster()
+	{
+		PhotonNetwork.JoinRandomRoom();
+	}
+	
+	public override void OnJoinedLobby()
+	{
+		PhotonNetwork.JoinRandomRoom();
+	}
+
 	public override void OnFailedToConnectToPhoton(DisconnectCause cause)
 	{
 		Debug.LogError("Cause: " + cause);
@@ -40,14 +52,19 @@ public class PUNManager : ConnectAndJoinRandom {
 	
 	public void OnJoinedRoom()
 	{
-		float randX = Random.Range (-4.0f, 4.0f);
-		GameObject go = PhotonNetwork.Instantiate (player.name, new Vector3(randX, 0, 0), Quaternion.identity, 0);
+		//float randX = Random.Range (-4.0f, 4.0f);
+		//GameObject go = PhotonNetwork.Instantiate (player.name, new Vector3(randX, 0, 0), Quaternion.identity, 0);
 
 		joinedRoom = true;
 		playerIndex = PhotonNetwork.room.playerCount - 1;
+		_view.RPC ("ShowNewPlayerJoined", PhotonTargets.All, playerIndex);
+
 		if (PhotonNetwork.room.playerCount == PhotonNetwork.room.maxPlayers) {
-			_view.RPC("ChangeScene", PhotonTargets.All);
+			PhotonNetwork.room.open = false;
+			PhotonNetwork.room.visible = false;
+			_view.RPC ("ChangeScene", PhotonTargets.All);
 		}
+
 	}
 
 	public void OnPhotonPlayerConnected(PhotonPlayer other) {
@@ -56,9 +73,15 @@ public class PUNManager : ConnectAndJoinRandom {
 
 	[PunRPC]
 	void ChangeScene() {
-		gameObject.name = PhotonNetwork.room.playerCount.ToString();
-		PhotonNetwork.LoadLevel("ingameScene");
+		Application.LoadLevel("ingameScene");
 
+	}
+
+	[PunRPC]
+	void ShowNewPlayerJoined(int playerIndex) {
+		for (int i=0; i<=playerIndex; i++) {
+			this.playerArrImg [i].enabled = true;
+		}
 	}
 
 }
