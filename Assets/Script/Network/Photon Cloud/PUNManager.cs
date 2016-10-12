@@ -31,7 +31,6 @@ public class PUNManager : ConnectAndJoinRandom {
 	
 	// Update is called once per frame
 	public override void Update () {
-		base.Update ();
 
 	}
 
@@ -49,12 +48,18 @@ public class PUNManager : ConnectAndJoinRandom {
 	{
 		Debug.LogError("Cause: " + cause);
 	}
+
+	public void ConnectToCloud() {
+		if (!PhotonNetwork.connected)
+		{
+			Debug.Log("Let's connect to the Photon Master Server. Calling: PhotonNetwork.ConnectUsingSettings();");
+			
+			PhotonNetwork.ConnectUsingSettings(Version + "." + SceneManagerHelper.ActiveSceneBuildIndex);
+		}
+	}
 	
 	public void OnJoinedRoom()
 	{
-		//float randX = Random.Range (-4.0f, 4.0f);
-		//GameObject go = PhotonNetwork.Instantiate (player.name, new Vector3(randX, 0, 0), Quaternion.identity, 0);
-
 		joinedRoom = true;
 		playerIndex = PhotonNetwork.room.playerCount - 1;
 		_view.RPC ("ShowNewPlayerJoined", PhotonTargets.All, playerIndex);
@@ -64,7 +69,6 @@ public class PUNManager : ConnectAndJoinRandom {
 			PhotonNetwork.room.visible = false;
 			_view.RPC ("ChangeScene", PhotonTargets.All);
 		}
-
 	}
 
 	public void OnPhotonPlayerConnected(PhotonPlayer other) {

@@ -1,13 +1,16 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\Animal\Animal.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\Network\Webservice\Question\QuestionManager.cs">
     <Files>
-      <File FileName="Assets\Script\GameController.cs" Line="30" Column="39" />
+      <File FileName="Assets\Script\Network\Webservice\Question\QuestionManager.cs" Line="50" Column="40" />
+      <File FileName="Assets\Script\Network\Photon Cloud\PUNManager.cs" Line="75" Column="3" />
+      <File FileName="Assets\Script\Network\Webservice\API.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\Network\Webservice\KeepConnection.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\Network\Webservice\Question\Question.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\Network\Webservice\Login\LoginManager.cs" Line="36" Column="40" />
+      <File FileName="Assets\Other Assets\SimpleJSON\SimpleJSON.cs" Line="1" Column="1" />
       <File FileName="Assets\Script\Camera\CameraPlayer.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Network\Photon Cloud\PUNManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Player\PlayerAnimation.cs" Line="1" Column="1" />
-      <File FileName="Assets\Photon Unity Networking\UtilityScripts\ConnectAndJoinRandom.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Animal\Animal.cs" Line="27" Column="21" />
+      <File FileName="Assets\Photon Unity Networking\UtilityScripts\ConnectAndJoinRandom.cs" Line="50" Column="40" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

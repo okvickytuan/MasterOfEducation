@@ -5,7 +5,6 @@ public class Animal : MonoBehaviour {
 
 	private PhotonView _view;
 	private int _playerIndex;
-	private int _slot;
 
 	// Use this for initialization
 	void Start () {
@@ -17,16 +16,18 @@ public class Animal : MonoBehaviour {
 	
 	}
 
-	internal void GitAnimalParent(int playerIndex, int slot) {
-		GetComponent<PhotonView>().RPC ("GitParent", PhotonTargets.All, playerIndex, slot);
+	internal void GitAnimalParent(int playerIndex) {
+		GetComponent<PhotonView>().RPC ("GitParent", PhotonTargets.All, playerIndex);
 	}
 
 	[PunRPC]
-	void GitParent(int playerIndex, int slot) {
+	void GitParent(int playerIndex) {
 		this._playerIndex = playerIndex;
-		this._slot = slot;
-		transform.parent = GameObject.Find ("Player " + (playerIndex+1)).transform.FindChild("slot_" + slot);
+		transform.parent = GameObject.Find ("Player " + (playerIndex+1)).transform.FindChild("animalSlot");
 		transform.localPosition = Vector3.zero;
+		Vector3 euler = transform.eulerAngles;
+		euler.y = Random.Range (0, 360);
+		transform.eulerAngles = euler;
 	}
 
 }
