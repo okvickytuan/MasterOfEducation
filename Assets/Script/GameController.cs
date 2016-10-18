@@ -3,13 +3,25 @@ using System.Collections;
 
 public class GameController : MonoBehaviour {
 
+	internal static GameController _instance;
+
 	public GameObject[] _animal = new GameObject[4];
 	public UnityEngine.UI.Text debug;
+	public UnityEngine.UI.Text countToStart;
 
 	private PhotonView _view;
 
 	private int playerReady = 0;
-	private int playerTurn = 1;
+	private int playerTurn = 0;
+	private int timeToStart = 4;
+
+	internal PhotonView PunView {
+		get { return _view; }
+	}
+
+	void Awake() {
+		_instance = this;
+	}
 
 	// Use this for initialization
 	void Start () {
@@ -34,17 +46,59 @@ public class GameController : MonoBehaviour {
 	[PunRPC]
 	void ReadyPlayer() {
 		playerReady++;
-
+		if (playerReady >= PhotonNetwork.room.playerCount) {
+			playerReady = 0;
+			CountToStart();
+		}
 	}
 
-	void ShowQuestion() {
-		_view.RPC ("PunShowQuestion", PhotonTargets.All);
+	void CountToStart() {
+		InvokeRepeating ("PunCountToStart", 0, 1);
+	}
+
+	void PunCountToStart() {
+
+		countToStart.transform.localScale = Vector3.one;
+		if (timeToStart > 0) {
+			countToStart.text = timeToStart.ToString ();
+			iTween.ScaleTo (countToStart.gameObject, iTween.Hash ("position", Vector3.zero, "time", 1f, "easetype", "linear"));
+		} else {
+			countToStart.text = "Start !!!";
+			iTween.ScaleTo (countToStart.gameObject, iTween.Hash ("position", Vector3.zero, "time", 1f, "easetype", "linear"));
+			playerReady++;
+			if (playerReady >= PhotonNetwork.room.playerCount) {
+				ResponseQuestion();
+			}
+			CancelInvoke("PunCountToStart");
+		}
+		timeToStart--;
+	}
+
+	void ResponseQuestion() {
+		debug.text = "START !!!";
+		QuestionManager._instance.ResponseQuestion (true);
+	}
+
+	void StartGame() {
+
 	}
 
 	[PunRPC]
-	void PunShowQuestion() {
-		QuestionManager._instance.ResponseQuestion ();
-		QuestionManager._instance.ShowQuestionTable ();
+	void PunStartGame() {
+
+	}
+
+	internal void GetTurn() {
+		_view.RPC ("PunGetTurn", PhotonTargets.All);
+	}
+
+	[PunRPC]
+	void PunGetTurn() {
+		if (playerTurn == 0) {
+			playerTurn = PUNManager._instance.PlayerIndex+1;
+			debug.text = "Turn: " + playerTurn.ToString();
+			QuestionManager._instance.HideQuestionTable();
+		}
 	}
 
 	int RollDice() {
