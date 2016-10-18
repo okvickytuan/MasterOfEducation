@@ -15,7 +15,7 @@ public class KeepConnection : MonoBehaviour {
 			WWWForm form = new WWWForm ();
 			form.AddField ("Id", PlayerInfo.id);
 
-			WWW w = new WWW ("http://localhost/MasterOfEducation/Connecting/KeepConnection.php", form);
+			WWW w = new WWW (GameConfig.KEEPCONNECTION_URL, form);
 			while (!w.isDone) {
 			
 			}

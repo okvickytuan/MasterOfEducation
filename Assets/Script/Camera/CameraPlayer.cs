@@ -27,6 +27,8 @@ public class CameraPlayer : MonoBehaviour {
 
 	void Start() {
 		DirectCamera (PUNManager._instance.PlayerIndex);
+
+
 	}
 
 	void RandPos() {

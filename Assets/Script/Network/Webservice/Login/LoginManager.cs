@@ -33,7 +33,7 @@ public class LoginManager : MonoBehaviour {
 		form.AddField ("Username", usernameField.text);
 		form.AddField ("Password", passwordField.text);
 		
-		WWW w = new WWW ("http://192.168.1.74/MasterOfEducation/Login/Register.php", form);
+		WWW w = new WWW (GameConfig.REGISTER_URL, form);
 		while (!w.isDone) {
 			
 		}
@@ -49,7 +49,7 @@ public class LoginManager : MonoBehaviour {
 		form.AddField ("Username", usernameField.text);
 		form.AddField ("Password", passwordField.text);
 		
-		WWW w = new WWW ("http://192.168.1.74/MasterOfEducation/Login/Login.php", form);
+		WWW w = new WWW (GameConfig.LOGIN_URL, form);
 		while (!w.isDone) {
 			
 		}

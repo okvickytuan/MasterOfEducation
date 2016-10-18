@@ -5,13 +5,19 @@ using UnityEngine.UI;
 
 public class QuestionManager : MonoBehaviour {
 
+	internal static QuestionManager _instance;
+
 	public RectTransform questionTable;
 
 	private Question question = null;
 
+	void Awake() {
+		_instance = this;
+	}
+
 	// Use this for initialization
 	void Start () {
-		ResponseQuestion ();
+		//ResponseQuestion ();
 	}
 	
 	// Update is called once per frame
@@ -21,7 +27,7 @@ public class QuestionManager : MonoBehaviour {
 
 	internal void ResponseQuestion() {
 		
-		WWW w = new WWW ("http://192.168.1.74/MasterOfEducation/Question/Question.php");
+		WWW w = new WWW (GameConfig.QUESTION_URL);
 		while (!w.isDone) {
 			
 		}
@@ -47,7 +53,7 @@ public class QuestionManager : MonoBehaviour {
 		form.AddField ("qid", question.Id);
 		form.AddField ("answer", answer);
 
-		WWW w = new WWW ("http://192.168.1.74/MasterOfEducation/Question/CheckAnswer.php", form);
+		WWW w = new WWW (GameConfig.CHECK_ANSWER_URL, form);
 		while (!w.isDone) {
 			
 		}
