@@ -3,7 +3,7 @@ using System.Collections;
 
 public class GameConfig {
 
-	internal static string SERVER_URL = "http://192.168.1.74/MasterOfEducation/";
+	internal static string SERVER_URL = "http://127.0.0.1/MasterOfEducation/";
 
 	internal static string LOGIN_URL = GameConfig.SERVER_URL + "Login/Login.php";
 	internal static string REGISTER_URL = GameConfig.SERVER_URL + "Login/Register.php";

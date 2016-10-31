@@ -37,11 +37,11 @@ public class Question {
 	}
 
 	internal void addToTable(RectTransform table) {
-		table.FindChild("Question").GetComponent<Text>().text = this.question;
-		table.FindChild("Answer_A").GetComponentInChildren<Text>().text = this.answerA;
-		table.FindChild("Answer_B").GetComponentInChildren<Text>().text = this.answerB;
-		table.FindChild("Answer_C").GetComponentInChildren<Text>().text = this.answerC;
-		table.FindChild("Answer_D").GetComponentInChildren<Text>().text = this.answerD;
+		table.FindChild("Question").FindChild("Text").GetComponent<Text>().text = this.question;
+		table.FindChild("Answer_A").GetComponentInChildren<Text>().text = "A." + this.answerA;
+		table.FindChild("Answer_B").GetComponentInChildren<Text>().text = "B." + this.answerB;
+		table.FindChild("Answer_C").GetComponentInChildren<Text>().text = "C." + this.answerC;
+		table.FindChild("Answer_D").GetComponentInChildren<Text>().text = "D." + this.answerD;
 	}
 
 }

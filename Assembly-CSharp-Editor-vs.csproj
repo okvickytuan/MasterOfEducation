@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Editor\CrossPlatformInput\CrossPlatformInputInitialize.cs" />
+     <Compile Include="Assets\Editor\GenerateBitmapFont\BitmapFontImporter.cs" />
      <Compile Include="Assets\Other Assets\Draw Call Minimizer\Scripts\NEW\Editor\DCMEditorWindow.cs" />
      <Compile Include="Assets\Other Assets\Draw Call Minimizer\Scripts\NEW\Editor\DrawCallMinimizerInspector.cs" />
      <Compile Include="Assets\Other Assets\Draw Call Minimizer\Scripts\NEW\Editor\Reorderable List\GenericListAdaptor.cs" />
@@ -166,6 +167,7 @@
      <None Include="Assets\Other Assets\unity-ui-extensions\Shaders\UIScreen.shader" />
      <None Include="Assets\Other Assets\Island pack\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_Antialiasing\FXAA3Console.shader" />
      <None Include="Assets\Photon Unity Networking\changelog.txt" />
+     <None Include="Assets\Font\WoodFont\font.fnt" />
      <None Include="Assets\Other Assets\Island pack\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_Antialiasing\FXAAPreset2.shader" />
      <None Include="Assets\Other Assets\Island pack\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\BlurAndFlares.shader" />
      <None Include="Assets\Other Assets\Island pack\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\BlendForBloom.shader" />
