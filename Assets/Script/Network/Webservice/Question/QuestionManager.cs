@@ -3,7 +3,7 @@ using System.Collections;
 using SimpleJSON;
 using UnityEngine.UI;
 
-public delegate void del_no_param();
+public delegate void del_no_param_no_return();
 
 public class QuestionManager : MonoBehaviour {
 
@@ -16,11 +16,12 @@ public class QuestionManager : MonoBehaviour {
 	private PhotonView _view;
 	private Question question = null;		//Cau hoi hien tai
 
-	private event del_no_param answerRightEvt = null;		//Event khi tra loi dung
-	private event del_no_param answerWrongEvt = null;		//Event khi tra loi sai
+	private bool isAnswered = false;		//Da tra loi cau hoi chua
+	private event del_no_param_no_return answerRightEvt = null;		//Event khi tra loi dung
+	private event del_no_param_no_return answerWrongEvt = null;		//Event khi tra loi sai
 
-	private float questionAppearTime = 0f;		//Thoi gian cau hoi xuat hien
-	internal float QuestionAppearTime {
+	private double questionAppearTime = 0f;		//Thoi gian cau hoi xuat hien
+	internal double QuestionAppearTime {
 		get { return questionAppearTime; }
 	}
 
@@ -40,10 +41,14 @@ public class QuestionManager : MonoBehaviour {
 
 	//Lay cau hoi tu webservice
 	internal void ResponseQuestion(bool showOthers = false) {
+		StartCoroutine (CoResponseQuestion (showOthers));
+	}
+
+	private IEnumerator CoResponseQuestion(bool showOthers) {
 		
 		WWW w = new WWW (GameConfig.QUESTION_URL);
 		while (!w.isDone) {
-			
+			yield return new WaitForEndOfFrame();
 		}
 		if (w.text != "") {
 			JSONNode node = JSON.Parse (w.text);
@@ -58,8 +63,9 @@ public class QuestionManager : MonoBehaviour {
 	//Luu cau hoi lay duoc - Add cau hoi vao bang cau hoi - Show bang cau hoi
 	[PunRPC]
 	void AddQuestion(string text, bool showOthers) {
+		isAnswered = false;
+
 		JSONNode node = JSON.Parse (text);
-		GameController._instance.debug.text = node["api"];
 		question = new Question();
 		question.Id = node["qid"].AsInt;
 		question.Ques = node["question_Vi"];
@@ -67,14 +73,13 @@ public class QuestionManager : MonoBehaviour {
 		question.AnswerB = node["answer_B_Vi"];
 		question.AnswerC = node["answer_C_Vi"];
 		question.AnswerD = node["answer_D_Vi"];
+		question.Time = node["time"].AsFloat;
 		question.addToTable(questionTable);
 
-		GameController._instance.debug.text += " " + showOthers;
 		if (showOthers == false) {
-			GameController._instance.debug.text += " " + GameController._instance.PlayerTurn;
 			if (PUNManager._instance.PlayerIndex+1 == GameController._instance.PlayerTurn) {
 				ShowQuestionTable();
-				Invoke("ShowOtherQuestionTable", 3);
+				Invoke("ShowOtherQuestionTable", question.Time/2.0f);
 			}
 		} else {
 			_view.RPC("ShowQuestionTable", PhotonTargets.All);
@@ -83,28 +88,36 @@ public class QuestionManager : MonoBehaviour {
 
 	//Gui request check cau tra loi
 	public void RequestAnswer(string answer) {
-		WWWForm form = new WWWForm ();
-		form.AddField ("qid", question.Id);
-		form.AddField ("answer", answer);
+		StartCoroutine (CoRequestAnswer (answer));
+	}
 
-		WWW w = new WWW (GameConfig.CHECK_ANSWER_URL, form);
-		while (!w.isDone) {
-			
-		}
-		Debug.Log (w.text);
-		if (w.text != "") {
-			JSONNode node = JSON.Parse (w.text);
-			if ((API)int.Parse(node["api"]) == API.DatabaseCannotConnect) {
-				Debug.LogError("Failed to connect to database");
-			} else if ((API)int.Parse(node["api"]) == API.AnswerCorrect) {
-				Debug.Log("Answer Correct");
-				if (answerRightEvt != null) {
-					answerRightEvt();
-				}
-			} else if ((API)int.Parse(node["api"]) == API.AnswerWrong) {
-				Debug.Log("Answer Wrong");
-				if (answerWrongEvt != null) {
-					answerWrongEvt();
+	private IEnumerator CoRequestAnswer(string answer) {
+		if (isAnswered == false) {		//Neu chua tra loi thi moi request cau tra loi
+			WWWForm form = new WWWForm ();
+			form.AddField ("qid", question.Id);
+			form.AddField ("answer", answer);
+		
+			WWW w = new WWW (GameConfig.CHECK_ANSWER_URL, form);
+			while (!w.isDone) {
+				yield return new WaitForEndOfFrame ();
+			}
+			Debug.Log (w.text);
+			if (w.text != "") {
+				JSONNode node = JSON.Parse (w.text);
+				if ((API)int.Parse (node ["api"]) == API.DatabaseCannotConnect) {
+					Debug.LogError ("Failed to connect to database");
+				} else if ((API)int.Parse (node ["api"]) == API.AnswerCorrect) {		//Tra loi dung
+					Debug.Log ("Answer Correct");
+					isAnswered = true;
+					if (answerRightEvt != null) {
+						answerRightEvt ();
+					}
+				} else if ((API)int.Parse (node ["api"]) == API.AnswerWrong) {		//Tra loi sai
+					Debug.Log ("Answer Wrong");
+					isAnswered = true;
+					if (answerWrongEvt != null) {
+						answerWrongEvt ();
+					}
 				}
 			}
 		}
@@ -115,6 +128,7 @@ public class QuestionManager : MonoBehaviour {
 	public void ShowQuestionTable() {
 		questionAppearTime = PhotonNetwork.time;
 		iTween.MoveTo (questionTable.gameObject, new Vector3 (questionTable.position.x, questionShow.position.y, 0), 1.0f);
+		WaitToHideQuestionTable ();
 	}
 
 	//Hien thi bang cau hoi cho nhung thanh vien con lai trong phong
@@ -129,15 +143,32 @@ public class QuestionManager : MonoBehaviour {
 	//An bang cau hoi
 	[PunRPC]
 	internal void HideQuestionTable() {
-		//_view.RPC ("PunHideQuestionTable", PhotonTargets.All);
 		iTween.MoveTo (questionTable.gameObject, new Vector3 (questionTable.position.x, questionHide.position.y, 0), 1f);
 		question = null;
 	}
 
 	//Add su kien khi tra loi Dung - Sai
-	internal void AddAnswerEvent(del_no_param rightEvt, del_no_param wrongEvt) {
+	internal void AddAnswerEvent(del_no_param_no_return rightEvt, del_no_param_no_return wrongEvt) {
 		answerRightEvt = rightEvt;
 		answerWrongEvt = wrongEvt;
+	}
+
+	internal void WaitToHideQuestionTable() {
+		if (question != null) {
+			StartCoroutine("CoWaitToHideQuestionTable");
+		}
+	}
+
+	private IEnumerator CoWaitToHideQuestionTable() {
+		while(PhotonNetwork.time - QuestionManager._instance.QuestionAppearTime < question.Time) {
+			yield return new WaitForFixedUpdate();
+		}
+		if (question != null) {
+			HideQuestionTable ();
+		}
+		if (isAnswered == false) {
+			GameController._instance.NotAnswerFirstQuestion();
+		}
 	}
 
 }

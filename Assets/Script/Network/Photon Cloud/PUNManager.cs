@@ -78,7 +78,6 @@ public class PUNManager : ConnectAndJoinRandom {
 	[PunRPC]
 	void ChangeScene() {
 		Application.LoadLevel("ingameScene");
-
 	}
 
 	[PunRPC]

@@ -10,6 +10,7 @@ public class Question {
 	private string answerB;
 	private string answerC;
 	private string answerD;
+	private float time;
 
 	internal int Id {
 		set { id = value; }
@@ -34,6 +35,11 @@ public class Question {
 
 	internal string AnswerD {
 		set { answerD = value; }
+	}
+
+	internal float Time {
+		get { return time; }
+		set { time = value; }
 	}
 
 	internal void addToTable(RectTransform table) {

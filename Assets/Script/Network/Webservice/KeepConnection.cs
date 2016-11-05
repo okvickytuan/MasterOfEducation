@@ -17,7 +17,7 @@ public class KeepConnection : MonoBehaviour {
 
 			WWW w = new WWW (GameConfig.KEEPCONNECTION_URL, form);
 			while (!w.isDone) {
-			
+				yield return new WaitForEndOfFrame();
 			}
 			yield return new WaitForSeconds(5);
 		}

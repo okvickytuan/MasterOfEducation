@@ -28,14 +28,14 @@ public class LoginManager : MonoBehaviour {
 		StartCoroutine("CoRegister");
 	}
 
-	private void CoRegister() {
+	private IEnumerator CoRegister() {
 		WWWForm form = new WWWForm ();
 		form.AddField ("Username", usernameField.text);
 		form.AddField ("Password", passwordField.text);
 		
 		WWW w = new WWW (GameConfig.REGISTER_URL, form);
 		while (!w.isDone) {
-			
+			yield return new WaitForEndOfFrame();
 		}
 		if ((API)int.Parse (w.text) == API.UsernameHasAlreadyExist) {
 			Debug.Log ("Username has already exist");
@@ -44,14 +44,14 @@ public class LoginManager : MonoBehaviour {
 		}
 	}
 
-	private void CoLogin() {
+	private IEnumerator CoLogin() {
 		WWWForm form = new WWWForm ();
 		form.AddField ("Username", usernameField.text);
 		form.AddField ("Password", passwordField.text);
 		
 		WWW w = new WWW (GameConfig.LOGIN_URL, form);
 		while (!w.isDone) {
-			
+			yield return new WaitForEndOfFrame();
 		}
 
 		string jsonStr = w.text;
