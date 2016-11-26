@@ -4,6 +4,7 @@ using SimpleJSON;
 using UnityEngine.UI;
 
 public delegate void del_no_param_no_return();
+public delegate void del_one_double_param(double param);
 
 public class QuestionManager : MonoBehaviour {
 
@@ -19,11 +20,14 @@ public class QuestionManager : MonoBehaviour {
 	private bool isAnswered = false;		//Da tra loi cau hoi chua
 	private event del_no_param_no_return answerRightEvt = null;		//Event khi tra loi dung
 	private event del_no_param_no_return answerWrongEvt = null;		//Event khi tra loi sai
+	private event del_one_double_param notAnswerEvt = null;			//Event khi khong tra loi
 
 	private double questionAppearTime = 0f;		//Thoi gian cau hoi xuat hien
 	internal double QuestionAppearTime {
 		get { return questionAppearTime; }
 	}
+
+	private bool[] currentQuestionDone = new bool[4];	//Cau hoi hien tai da hoan thanh (Da hoan thanh-True .... Chua HT-False)
 
 	void Awake() {
 		_instance = this;
@@ -92,7 +96,7 @@ public class QuestionManager : MonoBehaviour {
 	}
 
 	private IEnumerator CoRequestAnswer(string answer) {
-		if (isAnswered == false) {		//Neu chua tra loi thi moi request cau tra loi
+		if (isAnswered == false && question != null) {		//Neu chua tra loi thi moi request cau tra loi
 			WWWForm form = new WWWForm ();
 			form.AddField ("qid", question.Id);
 			form.AddField ("answer", answer);
@@ -106,7 +110,7 @@ public class QuestionManager : MonoBehaviour {
 				JSONNode node = JSON.Parse (w.text);
 				if ((API)int.Parse (node ["api"]) == API.DatabaseCannotConnect) {
 					Debug.LogError ("Failed to connect to database");
-				} else if ((API)int.Parse (node ["api"]) == API.AnswerCorrect) {		//Tra loi dung
+				} else if ((API)int.Parse (node ["api"]) == API.AnswerCorrect) {	//Tra loi dung
 					Debug.Log ("Answer Correct");
 					isAnswered = true;
 					if (answerRightEvt != null) {
@@ -148,27 +152,40 @@ public class QuestionManager : MonoBehaviour {
 	}
 
 	//Add su kien khi tra loi Dung - Sai
-	internal void AddAnswerEvent(del_no_param_no_return rightEvt, del_no_param_no_return wrongEvt) {
+	internal void AddAnswerEvent(del_no_param_no_return rightEvt, del_no_param_no_return wrongEvt, del_one_double_param notAnsEvt) {
 		answerRightEvt = rightEvt;
 		answerWrongEvt = wrongEvt;
+		notAnswerEvt = notAnsEvt;
 	}
 
 	internal void WaitToHideQuestionTable() {
-		if (question != null) {
-			StartCoroutine("CoWaitToHideQuestionTable");
-		}
+		StartCoroutine("CoWaitToHideQuestionTable");
 	}
 
 	private IEnumerator CoWaitToHideQuestionTable() {
 		while(PhotonNetwork.time - QuestionManager._instance.QuestionAppearTime < question.Time) {
 			yield return new WaitForFixedUpdate();
 		}
-		if (question != null) {
-			HideQuestionTable ();
+
+		if (isAnswered == false && notAnswerEvt != null) {
+			notAnswerEvt (question.Time);
 		}
-		if (isAnswered == false) {
-			GameController._instance.NotAnswerFirstQuestion();
+		_view.RPC ("DoneCurrentQuestion", PhotonTargets.All, PUNManager._instance.PlayerIndex);
+
+	}
+
+	//Sau khi hết thời gian hiển thị câu hỏi, từng người chơi báo cáo tiến độ cho các người chơi còn lại
+	[PunRPC]
+	private void DoneCurrentQuestion(int playerIndex) {
+		currentQuestionDone [playerIndex] = true;
+		for (int i=0; i<currentQuestionDone.Length; i++) {
+			if (currentQuestionDone[i] == false) {
+				return;
+			}
 		}
+		//Nếu tất cả người chơi đều hết thời gian trả lời...
+		HideQuestionTable ();
+		GameController._instance.ShowQuestionResult ();
 	}
 
 }

@@ -140,4 +140,20 @@ public class PlayerClosest {
 		return null;
 	}
 
+	internal static BODY_TYPE _curBody = BODY_TYPE.FAT;
+	internal static HAIR_TYPE _curHair = HAIR_TYPE.NONE;
+	internal static BEARD_TYPE _curBeard = BEARD_TYPE.NONE;
+	internal static HAT_TYPE _curHat = HAT_TYPE.NONE;
+	internal static BACKET_TYPE _curBacket = BACKET_TYPE.NONE;
+	internal static SKIN_TYPE _curSkin = SKIN_TYPE.SKIN_1;
+	internal static SKIN_TYPE _curFace = SKIN_TYPE.SKIN_1;
+	
+	internal static WEAPON_TYPE _curWeapon = WEAPON_TYPE.AXE_1;
+	internal static string _curWeaponStr = "NPC_Tools_Axe_001";
+	
+	internal static COLOR_TYPE _curBeardColor = COLOR_TYPE.RED;
+	internal static COLOR_TYPE _curHairColor = COLOR_TYPE.RED;
+	internal static HAT_COLOR _curHatColor = HAT_COLOR.HAT_1;
+	internal static WEAPON_COLOR _curWeaponColor = WEAPON_COLOR.COPPER;
+
 }

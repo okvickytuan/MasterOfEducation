@@ -79,19 +79,20 @@ public class PlayerAnimation : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		/*ChangeBody (BODY_TYPE.SKINNY);
-		ChangeHair (HAIR_TYPE.HAIR_4);
-		ChangeBeard (BEARD_TYPE.BEARD_3);
-		ChangeHat (HAT_TYPE.HAT_2);
-		ChangeBacket (BACKET_TYPE.BACKET_2);
-		ChangeSkin (SKIN_TYPE.SKIN_5);
-		ChangeFace (SKIN_TYPE.SKIN_11);
-		ChangeWeapon (WEAPON_TYPE.SHOVEL);
+		ChangeBody (PlayerClosest._curBody);
+		ChangeHair (PlayerClosest._curHair);
+		ChangeBeard (PlayerClosest._curBeard);	
+		ChangeHat (PlayerClosest._curHat);
+		ChangeBacket (PlayerClosest._curBacket);
+		ChangeSkin (PlayerClosest._curSkin);
+		ChangeFace (PlayerClosest._curFace);
+		ChangeWeapon (PlayerClosest._curWeapon);
 
-		ChangeBeardColor (COLOR_TYPE.WHITE);
-		ChangeHairColor (COLOR_TYPE.YELLOW);
-		ChangeHatColor (HAT_COLOR.HAT_4);
-		ChangeWeaponColor (WEAPON_COLOR.GOLD);*/
+		ChangeBeardColor (PlayerClosest._curBeardColor);
+		ChangeHairColor (PlayerClosest._curHairColor);
+		ChangeHatColor (PlayerClosest._curHatColor);
+		ChangeWeaponColor (PlayerClosest._curWeaponColor);
+		
 	}
 
 	/*public void ChangeBody(int type) {
