@@ -259,6 +259,7 @@
      <Compile Include="Assets\Script\InputManager\TouchHandle.cs" />
      <Compile Include="Assets\Script\Network\Photon Cloud\PUNManager.cs" />
      <Compile Include="Assets\Script\Network\Webservice\API.cs" />
+     <Compile Include="Assets\Script\Network\Webservice\Dice\DiceManager.cs" />
      <Compile Include="Assets\Script\Network\Webservice\Info\PlayerInfo.cs" />
      <Compile Include="Assets\Script\Network\Webservice\KeepConnection.cs" />
      <Compile Include="Assets\Script\Network\Webservice\Login\Login.cs" />
@@ -272,6 +273,7 @@
      <Compile Include="Assets\Script\Player\PlayerTurning.cs" />
      <Compile Include="Assets\Script\UI\DesignPlayer\ChooseClosest.cs" />
      <Compile Include="Assets\Script\UI\DesignPlayer\LadderScrolling.cs" />
+     <Compile Include="Assets\Script\UI\Ingame\Dice.cs" />
      <None Include="Assets\Other Assets\Island pack\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Other Assets\Island pack\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\NoiseEffectShaderRGB.shader" />
      <None Include="Assets\Other Assets\Island pack\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_DepthOfField\SeparableWeightedBlurDof34.shader" />

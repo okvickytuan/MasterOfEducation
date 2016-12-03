@@ -27,8 +27,6 @@ public class QuestionManager : MonoBehaviour {
 		get { return questionAppearTime; }
 	}
 
-	private bool[] currentQuestionDone = new bool[4];	//Cau hoi hien tai da hoan thanh (Da hoan thanh-True .... Chua HT-False)
-
 	void Awake() {
 		_instance = this;
 	}
@@ -170,19 +168,13 @@ public class QuestionManager : MonoBehaviour {
 		if (isAnswered == false && notAnswerEvt != null) {
 			notAnswerEvt (question.Time);
 		}
-		_view.RPC ("DoneCurrentQuestion", PhotonTargets.All, PUNManager._instance.PlayerIndex);
-
+		//_view.RPC ("DoneCurrentQuestion", PhotonTargets.All, PUNManager._instance.PlayerIndex);
+		DoneCurrentQuestion (PUNManager._instance.PlayerIndex);
 	}
 
-	//Sau khi hết thời gian hiển thị câu hỏi, từng người chơi báo cáo tiến độ cho các người chơi còn lại
+	//Sau khi hết thời gian hiển thị câu hỏi, từng người chơi báo cáo kết quả cho các người chơi còn lại
 	[PunRPC]
 	private void DoneCurrentQuestion(int playerIndex) {
-		currentQuestionDone [playerIndex] = true;
-		for (int i=0; i<currentQuestionDone.Length; i++) {
-			if (currentQuestionDone[i] == false) {
-				return;
-			}
-		}
 		//Nếu tất cả người chơi đều hết thời gian trả lời...
 		HideQuestionTable ();
 		GameController._instance.ShowQuestionResult ();

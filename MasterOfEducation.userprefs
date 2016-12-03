@@ -1,11 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\Network\Webservice\Question\QuestionManager.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\GameManager\GameController.cs">
     <Files>
-      <File FileName="Assets\Script\Network\Photon Cloud\PUNManager.cs" Line="47" Column="58" />
-      <File FileName="Assets\Script\GameManager\GameController.cs" Line="123" Column="64" />
-      <File FileName="Assets\Script\UI\DesignPlayer\ChooseClosest.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Network\Webservice\Question\QuestionManager.cs" Line="179" Column="41" />
+      <File FileName="Assets\Script\GameManager\GameController.cs" Line="204" Column="34" />
+      <File FileName="Assets\Script\Network\Webservice\Question\QuestionManager.cs" Line="62" Column="4" />
+      <File FileName="Assets\Script\Network\Webservice\Dice\DiceManager.cs" Line="26" Column="36" />
+      <File FileName="Assets\Script\UI\Ingame\Dice.cs" Line="32" Column="53" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

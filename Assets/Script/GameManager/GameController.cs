@@ -110,14 +110,8 @@ public class GameController : MonoBehaviour {
 	//Hien thị những câu hỏi đầu tiên để dành quyền đi trước
 	private void ShowFirstQuestions() {
 		QuestionManager._instance.AddAnswerEvent (AnswerFirstQuestionRight, AnswerFirstQuestionWrong, NotAnswerFirstQuestion);
-		/*do {
-			if (_playerTurn == PUNManager._instance.PlayerIndex + 1) {
-				QuestionManager._instance.ResponseQuestion (true);
-			}
-			_view.RPC("DecreaseFirstQuestionShowed", PhotonTargets.All);
-			yield return new WaitForSeconds(7);
-		} while(numberOfFirstQuestion > 0);
-		CheckToSetFirstPlayerTurn ();*/
+		
+		ResetCurrentAnswerTime ();
 		if (_playerTurn == PUNManager._instance.PlayerIndex + 1) {
 			QuestionManager._instance.ResponseQuestion (true);
 			_view.RPC("DecreaseFirstQuestionShowed", PhotonTargets.All);
@@ -129,7 +123,8 @@ public class GameController : MonoBehaviour {
 		double deltaTime = PhotonNetwork.time - QuestionManager._instance.QuestionAppearTime;
 		_view.RPC ("AddFirstTotalAnswerTime", PhotonTargets.All, PUNManager._instance.PlayerIndex, deltaTime);
 		_view.RPC ("ChangeCurrentAnswer", PhotonTargets.All, PUNManager._instance.PlayerIndex, deltaTime, true);
-		debug.text = "Time: " + firstTotalAnswerTime [PUNManager._instance.PlayerIndex];
+		//debug.text = "Time: " + firstTotalAnswerTime [PUNManager._instance.PlayerIndex];
+		//debug.text = "" + currentAnswerTime[PUNManager._instance.PlayerIndex];
 	}
 
 	//Khi tra loi sai loat cau hoi dau tien
@@ -137,7 +132,8 @@ public class GameController : MonoBehaviour {
 		double deltaTime = PhotonNetwork.time - QuestionManager._instance.QuestionAppearTime;
 		_view.RPC ("AddFirstTotalAnswerTime", PhotonTargets.All, PUNManager._instance.PlayerIndex, deltaTime);
 		_view.RPC ("ChangeCurrentAnswer", PhotonTargets.All, PUNManager._instance.PlayerIndex, deltaTime, false);
-		debug.text = "Time: " + firstTotalAnswerTime [PUNManager._instance.PlayerIndex];
+		//debug.text = "Time: " + firstTotalAnswerTime [PUNManager._instance.PlayerIndex];
+		//debug.text = "" + currentAnswerTime[PUNManager._instance.PlayerIndex];
 	}
 
 	//Khong tra loi loat cau hoi dau tien
@@ -150,13 +146,17 @@ public class GameController : MonoBehaviour {
 	[PunRPC]
 	private void AddFirstTotalAnswerTime(int playerIndex, double time) {
 		firstTotalAnswerTime [playerIndex] += time;
-		debug.text = "Time: " + firstTotalAnswerTime [PUNManager._instance.PlayerIndex];
+		//debug.text = "Time: " + firstTotalAnswerTime [PUNManager._instance.PlayerIndex];
 	}
 
 	[PunRPC]
 	private void ChangeCurrentAnswer(int playerIndex, double time, bool result) {
 		currentAnswerTime [playerIndex] = time;
 		currentAnswerResult [playerIndex] = result;
+		//debug.text = "Players time: ";
+		for (int i=0; i<currentAnswerTime.Length; i++) {
+			//debug.text += "\n" + currentAnswerTime[i];
+		}
 	}
 
 	[PunRPC]
@@ -166,7 +166,10 @@ public class GameController : MonoBehaviour {
 
 	//Hiển thị kết quả câu hỏi hiện tại cho các người chơi
 	internal void ShowQuestionResult() {
-		_view.RPC ("PunShowQuestionResult", PhotonTargets.All);
+		if (_playerTurn == PUNManager._instance.PlayerIndex + 1) {
+			_view.RPC ("PunShowQuestionResult", PhotonTargets.All);
+		}
+
 	}
 
 	[PunRPC]
@@ -175,27 +178,40 @@ public class GameController : MonoBehaviour {
 			//Tìm người trlời đúng và nhanh nhất in ra
 			double minTime = 100.0;
 			int playerChosen = 0;
+			//debug.text = "Danh sach nguoi choi";
 			for (int i=0; i<currentAnswerResult.Length; i++) {
+				//debug.text += "\n" + currentAnswerTime[i];
 				if (currentAnswerResult[i] == true && currentAnswerTime[i] < minTime) {
 					playerChosen = i+1;
 					minTime = currentAnswerTime[i];
 				}
 			}
-			debug.text = "Người trl đúng: " + (playerChosen == 0 ? "Khong co" : playerChosen.ToString());
+			//debug.text = "Người trl đúng: " + (playerChosen == 0 ? "Khong co" : playerChosen.ToString());
 			if (playerChosen == 0) {	//Không ai trả lời đúng
-				if (numberOfFirstQuestion > 0) {	//Vẫn còn câu hỏi
+				if (numberOfFirstQuestion >= 0) {	//Vẫn còn câu hỏi
 					//Câu hỏi tiếp theo
 					ShowFirstQuestions();
-				} else {
-					//Disconnect all
-					print("Disconnect all player in room");
+				} else {							//Hết câu hỏi
+					bool noOneAnswer = true;
+					for (int i=1; i<firstTotalAnswerTime.Length; i++) {
+						if (firstTotalAnswerTime[0] != firstTotalAnswerTime[i]) {
+							noOneAnswer = false;
+							break;
+						}
+					}
+					if (noOneAnswer == true) {		//Disconnect all
+						GameController._instance.debug.text = "Disconnect all player in room";
+						PhotonNetwork.Disconnect();
+					}
 				}
 			} else {
 				_playerTurn = playerChosen;
+				firstPlayerTurn = _playerTurn;
 				debug.text = "Player first is: Player " + _playerTurn;
 			}
+			ResetFirstQuestionResult ();
 		}
-		ResetFirstQuestionResult ();
+
 	}
 
 	//Reset câu trả lời của các người chơi
@@ -204,6 +220,13 @@ public class GameController : MonoBehaviour {
 		for (int i=0; i<currentAnswerResult.Length; i++) {
 			currentAnswerResult[i] = false;
 		}
+	}
+
+	private void ResetCurrentAnswerTime() {
+		for (int i=0; i<currentAnswerTime.Length; i++) {
+			currentAnswerTime[i] = 0.0;
+		}
+		//debug.text += "\nresettttt";
 	}
 
 	//Kiem tra thoi gian ai tra loi nhanh nhất sẽ dành quyền ưu tiên đi trước
@@ -217,10 +240,6 @@ public class GameController : MonoBehaviour {
 			}
 		}
 		_view.RPC ("PunSetTurn", PhotonTargets.All, playerIndex + 1);*/
-	}
-
-	int RollDice() {
-		return Random.Range (1, 7);
 	}
 
 }
