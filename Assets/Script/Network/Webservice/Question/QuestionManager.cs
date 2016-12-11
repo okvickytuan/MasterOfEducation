@@ -3,9 +3,6 @@ using System.Collections;
 using SimpleJSON;
 using UnityEngine.UI;
 
-public delegate void del_no_param_no_return();
-public delegate void del_one_double_param(double param);
-
 public class QuestionManager : MonoBehaviour {
 
 	internal static QuestionManager _instance;
@@ -78,6 +75,8 @@ public class QuestionManager : MonoBehaviour {
 		question.Time = node["time"].AsFloat;
 		question.addToTable(questionTable);
 
+		questionAppearTime = PhotonNetwork.time;
+
 		if (showOthers == false) {
 			if (PUNManager._instance.PlayerIndex+1 == GameController._instance.PlayerTurn) {
 				ShowQuestionTable();
@@ -86,6 +85,8 @@ public class QuestionManager : MonoBehaviour {
 		} else {
 			_view.RPC("ShowQuestionTable", PhotonTargets.All);
 		}
+
+
 	}
 
 	//Gui request check cau tra loi
@@ -103,6 +104,7 @@ public class QuestionManager : MonoBehaviour {
 			while (!w.isDone) {
 				yield return new WaitForEndOfFrame ();
 			}
+			//GameController._instance.debug.text = w.text + "  aaaaa";
 			Debug.Log (w.text);
 			if (w.text != "") {
 				JSONNode node = JSON.Parse (w.text);
@@ -125,17 +127,19 @@ public class QuestionManager : MonoBehaviour {
 		}
 	}
 
-	//Hien thi bang cau hoi - Lay thoi gian hien tai
+	//Hien thi bang cau hoi - Auto hide cau hoi
 	[PunRPC]
 	public void ShowQuestionTable() {
-		questionAppearTime = PhotonNetwork.time;
+
 		iTween.MoveTo (questionTable.gameObject, new Vector3 (questionTable.position.x, questionShow.position.y, 0), 1.0f);
 		WaitToHideQuestionTable ();
 	}
 
 	//Hien thi bang cau hoi cho nhung thanh vien con lai trong phong
 	internal void ShowOtherQuestionTable() {
-		_view.RPC ("ShowQuestionTable", PhotonTargets.Others);
+		if (isAnswered == false) {
+			_view.RPC ("ShowQuestionTable", PhotonTargets.Others);
+		}
 	}
 
 	internal void PunHideQuestionTable(PhotonTargets target) {
@@ -161,7 +165,7 @@ public class QuestionManager : MonoBehaviour {
 	}
 
 	private IEnumerator CoWaitToHideQuestionTable() {
-		while(PhotonNetwork.time - QuestionManager._instance.QuestionAppearTime < question.Time) {
+		while(PhotonNetwork.time - questionAppearTime < question.Time) {
 			yield return new WaitForFixedUpdate();
 		}
 

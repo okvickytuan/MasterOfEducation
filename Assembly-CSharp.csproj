@@ -255,6 +255,7 @@
      <Compile Include="Assets\Script\DesignPlayer\DesignPlayerUpdate.cs" />
      <Compile Include="Assets\Script\GameManager\GameConfig.cs" />
      <Compile Include="Assets\Script\GameManager\GameController.cs" />
+     <Compile Include="Assets\Script\GameManager\GameDelegate.cs" />
      <Compile Include="Assets\Script\GameManager\GameState.cs" />
      <Compile Include="Assets\Script\InputManager\TouchHandle.cs" />
      <Compile Include="Assets\Script\Network\Photon Cloud\PUNManager.cs" />
@@ -273,6 +274,7 @@
      <Compile Include="Assets\Script\Player\PlayerTurning.cs" />
      <Compile Include="Assets\Script\UI\DesignPlayer\ChooseClosest.cs" />
      <Compile Include="Assets\Script\UI\DesignPlayer\LadderScrolling.cs" />
+     <Compile Include="Assets\Script\UI\FPSDisplay.cs" />
      <Compile Include="Assets\Script\UI\Ingame\Dice.cs" />
      <None Include="Assets\Other Assets\Island pack\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Other Assets\Island pack\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\NoiseEffectShaderRGB.shader" />

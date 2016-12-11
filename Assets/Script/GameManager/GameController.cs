@@ -17,11 +17,19 @@ public class GameController : MonoBehaviour {
 	private int _playerTurn = 1;		//Luot cua nguoi choi hien tai
 	private int timeToStart = 3;		//Thoi gian bat dau tran dau
 
-	private double[] firstTotalAnswerTime = new double[4];	//Tong thoi gian tra loi cau hoi danh quyen di chuyen dau tien
 	private double[] currentAnswerTime = new double[4];		//Thoi gian tra loi cau hoi tien tai
 	private bool[] currentAnswerResult = new bool[4];		//Ket qua cau tra loi hien tai (Dung-True .... Sai-False)
+
+
+	//............CÁC THUỘC TÍNH CHO CÂU HỎI DÀNH QUYỀN ĐI TRƯỚC.....................
+
+	private double[] firstTotalAnswerTime = new double[4];	//Tong thoi gian tra loi cau hoi danh quyen di chuyen dau tien
 	private int numberOfFirstQuestion = 3;					//So cau hoi de danh quyen di chuyen dau tien
 	private int firstPlayerTurn = 0;						//Người chơi giành lượt đi đầu tiên
+
+	//............CÁC THUỘC TÍNH CHO CÂU HỎI LUÂN PHIÊN.....................
+	private int[] playersMoves = new int[4] { 1, 1, 1, 1 };		//Lượt mỗi người chơi
+	private int[] playersRolls = new int[4] { 2, 2, 2, 2 };		//Lượt đổ xí ngầu mỗi người chơi (ban đầu có 2 lượt)
 
 
 	internal PhotonView PunView {
@@ -91,6 +99,10 @@ public class GameController : MonoBehaviour {
 		countToStart.text = "";
 	}
 
+	//.............................................................................................................
+	//............................TRẢ LỜI CÂU HỎI ĐẦU TIÊN DÀNH QUYỀN ĐI TRƯỚC.....................................
+	//.............................................................................................................
+
 	//Bat dau game sau khi dem xong - Nguoi choi 1 lay cau hoi va gui cho tat ca nguoi choi trong phong
 	[PunRPC]
 	void StartGame() {
@@ -125,6 +137,7 @@ public class GameController : MonoBehaviour {
 		_view.RPC ("ChangeCurrentAnswer", PhotonTargets.All, PUNManager._instance.PlayerIndex, deltaTime, true);
 		//debug.text = "Time: " + firstTotalAnswerTime [PUNManager._instance.PlayerIndex];
 		//debug.text = "" + currentAnswerTime[PUNManager._instance.PlayerIndex];
+
 	}
 
 	//Khi tra loi sai loat cau hoi dau tien
@@ -154,6 +167,7 @@ public class GameController : MonoBehaviour {
 		currentAnswerTime [playerIndex] = time;
 		currentAnswerResult [playerIndex] = result;
 		//debug.text = "Players time: ";
+		//debug.text += "\n" + time;
 		for (int i=0; i<currentAnswerTime.Length; i++) {
 			//debug.text += "\n" + currentAnswerTime[i];
 		}
@@ -174,49 +188,78 @@ public class GameController : MonoBehaviour {
 
 	[PunRPC]
 	private void PunShowQuestionResult() {
-		if (gameState == GameState.ChooseFirstPlayerTurn) {
-			//Tìm người trlời đúng và nhanh nhất in ra
-			double minTime = 100.0;
-			int playerChosen = 0;
-			//debug.text = "Danh sach nguoi choi";
-			for (int i=0; i<currentAnswerResult.Length; i++) {
-				//debug.text += "\n" + currentAnswerTime[i];
-				if (currentAnswerResult[i] == true && currentAnswerTime[i] < minTime) {
-					playerChosen = i+1;
-					minTime = currentAnswerTime[i];
-				}
-			}
-			//debug.text = "Người trl đúng: " + (playerChosen == 0 ? "Khong co" : playerChosen.ToString());
-			if (playerChosen == 0) {	//Không ai trả lời đúng
-				if (numberOfFirstQuestion >= 0) {	//Vẫn còn câu hỏi
-					//Câu hỏi tiếp theo
-					ShowFirstQuestions();
-				} else {							//Hết câu hỏi
-					bool noOneAnswer = true;
-					for (int i=1; i<firstTotalAnswerTime.Length; i++) {
-						if (firstTotalAnswerTime[0] != firstTotalAnswerTime[i]) {
-							noOneAnswer = false;
-							break;
-						}
-					}
-					if (noOneAnswer == true) {		//Disconnect all
-						GameController._instance.debug.text = "Disconnect all player in room";
-						PhotonNetwork.Disconnect();
-					}
-				}
-			} else {
-				_playerTurn = playerChosen;
-				firstPlayerTurn = _playerTurn;
-				debug.text = "Player first is: Player " + _playerTurn;
-			}
-			ResetFirstQuestionResult ();
+		switch (gameState) {
+		case GameState.ChooseFirstPlayerTurn:
+			ShowFirstQuestionResult();
+			break;
+		case GameState.Ingame:
+			ShowIngameQuestionResult();
+			break;
+		case GameState.Finish:
+
+			break;
 		}
 
 	}
 
+	//Kiem tra thoi gian ai tra loi nhanh nhất sẽ dành quyền ưu tiên đi trước
+	private void ShowFirstQuestionResult() {
+		//Tìm người trlời đúng và nhanh nhất in ra
+		double minTime = 100.0;
+		int playerChosen = 0;
+		//debug.text = "Danh sach nguoi choi";
+		for (int i=0; i<currentAnswerResult.Length; i++) {
+			//debug.text += "\n" + currentAnswerTime[i];
+			if (currentAnswerResult[i] == true && currentAnswerTime[i] < minTime) {
+				playerChosen = i+1;
+				minTime = currentAnswerTime[i];
+			}
+		}
+		//debug.text = "Người trl đúng: " + (playerChosen == 0 ? "Khong co" : playerChosen.ToString());
+		if (playerChosen == 0) {	//Không ai trả lời đúng
+			if (numberOfFirstQuestion >= 0) {	//Vẫn còn câu hỏi
+				//Câu hỏi tiếp theo
+				ShowFirstQuestions();
+			} else {							//Hết câu hỏi
+				bool noOneAnswer = true;
+				for (int i=1; i<firstTotalAnswerTime.Length; i++) {
+					if (firstTotalAnswerTime[0] != firstTotalAnswerTime[i]) {
+						noOneAnswer = false;
+						break;
+					}
+				}
+				if (noOneAnswer == true) {		//Disconnect all
+					GameController._instance.debug.text = "Disconnect all player in room";
+					PhotonNetwork.Disconnect();
+				} else {
+					for (int i=0; i<currentAnswerResult.Length; i++) {
+						if (currentAnswerTime[i] == minTime) {
+							playerChosen = i+1;
+							minTime = currentAnswerTime[i];
+						}
+					}
+					_playerTurn = playerChosen;
+					firstPlayerTurn = _playerTurn;
+					gameState = GameState.Ingame;
+					//ShowQuestion();
+					RollDice();
+					debug.text = "Player first is: Player " + _playerTurn;
+				}
+			}
+		} else {
+			_playerTurn = playerChosen;
+			firstPlayerTurn = _playerTurn;
+			gameState = GameState.Ingame;
+			//ShowQuestion();
+			RollDice();
+			debug.text = "Player first is: Player " + _playerTurn;
+		}
+		ResetPlayersAnswerResult ();
+	}
+
 	//Reset câu trả lời của các người chơi
 	[PunRPC]
-	private void ResetFirstQuestionResult() {
+	private void ResetPlayersAnswerResult() {
 		for (int i=0; i<currentAnswerResult.Length; i++) {
 			currentAnswerResult[i] = false;
 		}
@@ -229,17 +272,143 @@ public class GameController : MonoBehaviour {
 		//debug.text += "\nresettttt";
 	}
 
-	//Kiem tra thoi gian ai tra loi nhanh nhất sẽ dành quyền ưu tiên đi trước
-	private void CheckToSetFirstPlayerTurn() {
-		/*double minTime = firstTotalAnswerTime [0];
-		int playerIndex = 0;
-		for (int i=1; i<firstTotalAnswerTime.Length; i++) {
-			if (firstTotalAnswerTime[i] < minTime) {
-				minTime = firstTotalAnswerTime[i];
-				playerIndex = i;
+
+
+	//.............................................................................................................
+	//...........................INGAME: THAY PHIÊN NHAU ĐỔ XÍ NGẦU ĐỂ DI CHUYỂN...................................
+	//.............................................................................................................
+	
+	private void ShowQuestion() {
+		QuestionManager._instance.AddAnswerEvent (AnswerRight, AnswerWrong, NotAnswer);
+		
+		ResetCurrentAnswerTime ();
+		ResetPlayersAnswerResult ();
+		if (_playerTurn == PUNManager._instance.PlayerIndex + 1) {
+			QuestionManager._instance.ResponseQuestion ();
+			_view.RPC ("DecreasePlayerMove", PhotonTargets.All, PUNManager._instance.PlayerIndex);
+		}
+	}
+
+	private void AnswerRight() {
+		double deltaTime = PhotonNetwork.time - QuestionManager._instance.QuestionAppearTime;
+		_view.RPC ("ChangeCurrentAnswer", PhotonTargets.All, PUNManager._instance.PlayerIndex, deltaTime, true);
+	}
+
+	private void AnswerWrong() {
+		double deltaTime = PhotonNetwork.time - QuestionManager._instance.QuestionAppearTime;
+		_view.RPC ("ChangeCurrentAnswer", PhotonTargets.All, PUNManager._instance.PlayerIndex, deltaTime, false);
+	}
+
+	private void NotAnswer(double questionTime) {
+		_view.RPC ("ChangeCurrentAnswer", PhotonTargets.All, PUNManager._instance.PlayerIndex, questionTime, false);
+	}
+
+	[PunRPC]
+	private void DecreasePlayerMove(int playerIndex) {
+		playersMoves [playerIndex] -= 1;
+	}
+
+	[PunRPC]
+	private void DecreasePlayerRoll(int playerIndex) {
+		playersRolls [playerIndex] -= 1;
+	}
+
+	[PunRPC]
+	private void ResetPlayerRoll() {
+		for (int i=0; i<playersRolls.Length; i++) {
+			playersRolls [i] = 1;
+		}
+	}
+
+	//Hiện kết quả
+	private void ShowIngameQuestionResult() {
+		//Tìm người trlời đúng và nhanh nhất in ra
+		double minTime = 100.0;
+		int playerChosen = 0;
+		//debug.text = "Danh sach nguoi choi";
+		for (int i=0; i<currentAnswerResult.Length; i++) {
+			//debug.text += "\n" + currentAnswerTime[i];
+			if (currentAnswerResult[i] == true && currentAnswerTime[i] < minTime) {
+				playerChosen = i+1;
+				minTime = currentAnswerTime[i];
 			}
 		}
-		_view.RPC ("PunSetTurn", PhotonTargets.All, playerIndex + 1);*/
+
+		if (playerChosen == 0) {	//Không ai trả lời đúng
+			ShowQuestion();
+		} else {
+			debug.text = "Player right: Player " + playerChosen;
+			/*if (playerChosen == PUNManager._instance.PlayerIndex+1) {
+				DiceManager._instance._canRoll = true;
+				DiceManager._instance.AddRollDoneEvent(RollDone);
+				DiceManager._instance.AutoRoll();
+			} else {
+				DiceManager._instance.diceButton.Roll();
+			}*/
+			RollDice(playerChosen);
+		}
+
+	}
+
+	//Đổ xí ngầu
+	private void RollDice() {
+		if (_playerTurn == PUNManager._instance.PlayerIndex+1) {
+			DiceManager._instance._canRoll = true;
+			DiceManager._instance.AddRollDoneEvent(RollDone);
+			DiceManager._instance.AutoRoll();
+		}
+	}
+
+	private void RollDice(int playerRoll) {
+		if (playerRoll == PUNManager._instance.PlayerIndex+1) {
+			DiceManager._instance._canRoll = true;
+			DiceManager._instance.AddRollDoneEvent(RollDone);
+			DiceManager._instance.AutoRoll();
+		}
+	}
+
+	//Đổ xong xí ngầu
+	private void RollDone(int dot) {
+		DiceManager._instance.StopRoll (dot, PhotonTargets.Others);
+		if (playersRolls [_playerTurn-1] > 1 || dot != 6) {
+			_view.RPC("DecreasePlayerRoll", PhotonTargets.All, PUNManager._instance.PlayerIndex);
+		}
+		debug.text = "" + playersRolls [_playerTurn - 1];
+		if (playersRolls [_playerTurn-1] > 0) {
+			RollDice();
+		} else {
+			_view.RPC ("NextTurn", PhotonTargets.All);
+		}
+	}
+
+	//Chuyển lượt chơi sang người kế tiếp
+	[PunRPC]
+	private void NextTurn() {
+		/*if (playersMoves [_playerTurn - 1] <= 0) {
+			_playerTurn = _playerTurn == 4 ? 1 : _playerTurn+1;
+		}*/
+		//Xoay vòng lượt...
+		_playerTurn = _playerTurn == 4 ? 1 : _playerTurn+1;
+
+		bool allPlayerDone = true;
+		for (int i=0; i<playersRolls.Length; i++) {
+			if (playersRolls[i] != 0) {
+				allPlayerDone = false;
+				break;
+			}
+		}
+		if (allPlayerDone) {
+			ResetPlayerRoll();
+		}
+
+		//Nếu là loạt ưu tiên (mỗi người đổ 2 lần xí ngầu) ở lần đầu tiên đổ thì cho đổ tiếp
+		if (playersRolls [_playerTurn - 1] > 1) {
+			RollDice ();
+		} else if (playersRolls [_playerTurn - 1] == 1) {	//Nếu ko thì hiện câu hỏi
+			//_view.RPC ("ShowQuestion", PhotonTargets.All);
+			debug.text = "Show question";
+			ShowQuestion();
+		}
 	}
 
 }

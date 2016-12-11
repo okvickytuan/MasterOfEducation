@@ -1,11 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\GameManager\GameController.cs">
     <Files>
-      <File FileName="Assets\Script\GameManager\GameController.cs" Line="204" Column="34" />
-      <File FileName="Assets\Script\Network\Webservice\Question\QuestionManager.cs" Line="62" Column="4" />
-      <File FileName="Assets\Script\Network\Webservice\Dice\DiceManager.cs" Line="26" Column="36" />
-      <File FileName="Assets\Script\UI\Ingame\Dice.cs" Line="32" Column="53" />
+      <File FileName="Assets\Script\GameManager\GameController.cs" Line="284" Column="29" />
+      <File FileName="Assets\Script\UI\FPSDisplay.cs" Line="27" Column="3" />
+      <File FileName="Assets\Script\Network\Webservice\Question\QuestionManager.cs" Line="130" Column="45" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
