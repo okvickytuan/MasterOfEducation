@@ -28,7 +28,7 @@ public class GameController : MonoBehaviour {
 	private int firstPlayerTurn = 0;						//Người chơi giành lượt đi đầu tiên
 
 	//............CÁC THUỘC TÍNH CHO CÂU HỎI LUÂN PHIÊN.....................
-	private int[] playersMoves = new int[4] { 1, 1, 1, 1 };		//Lượt mỗi người chơi
+	//private int[] playersMoves = new int[4] { 1, 1, 1, 1 };		//Lượt mỗi người chơi
 	private int[] playersRolls = new int[4] { 2, 2, 2, 2 };		//Lượt đổ xí ngầu mỗi người chơi (ban đầu có 2 lượt)
 
 
@@ -285,7 +285,7 @@ public class GameController : MonoBehaviour {
 		ResetPlayersAnswerResult ();
 		if (_playerTurn == PUNManager._instance.PlayerIndex + 1) {
 			QuestionManager._instance.ResponseQuestion ();
-			_view.RPC ("DecreasePlayerMove", PhotonTargets.All, PUNManager._instance.PlayerIndex);
+			//_view.RPC ("DecreasePlayerMove", PhotonTargets.All, PUNManager._instance.PlayerIndex);
 		}
 	}
 
@@ -305,7 +305,7 @@ public class GameController : MonoBehaviour {
 
 	[PunRPC]
 	private void DecreasePlayerMove(int playerIndex) {
-		playersMoves [playerIndex] -= 1;
+		//playersMoves [playerIndex] -= 1;
 	}
 
 	[PunRPC]
@@ -384,12 +384,12 @@ public class GameController : MonoBehaviour {
 	//Chuyển lượt chơi sang người kế tiếp
 	[PunRPC]
 	private void NextTurn() {
-		/*if (playersMoves [_playerTurn - 1] <= 0) {
-			_playerTurn = _playerTurn == 4 ? 1 : _playerTurn+1;
-		}*/
-		//Xoay vòng lượt...
+		//Reset lượt đổ xí ngầu của người chơi cũ
+		playersRolls [_playerTurn - 1] = 1;
+		//Xoay vòng lượt đến người chơi tiếp theo...
 		_playerTurn = _playerTurn == 4 ? 1 : _playerTurn+1;
 
+		/*
 		bool allPlayerDone = true;
 		for (int i=0; i<playersRolls.Length; i++) {
 			if (playersRolls[i] != 0) {
@@ -408,7 +408,9 @@ public class GameController : MonoBehaviour {
 			//_view.RPC ("ShowQuestion", PhotonTargets.All);
 			debug.text = "Show question";
 			ShowQuestion();
-		}
+		}*/
+
+		ShowQuestion();
 	}
 
 }

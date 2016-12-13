@@ -80,7 +80,7 @@ public class QuestionManager : MonoBehaviour {
 		if (showOthers == false) {
 			if (PUNManager._instance.PlayerIndex+1 == GameController._instance.PlayerTurn) {
 				ShowQuestionTable();
-				Invoke("ShowOtherQuestionTable", question.Time/2.0f);
+				//Invoke("ShowOtherQuestionTable", question.Time/2.0f);
 			}
 		} else {
 			_view.RPC("ShowQuestionTable", PhotonTargets.All);
