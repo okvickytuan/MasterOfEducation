@@ -31,6 +31,7 @@ public class GameController : MonoBehaviour {
 	//private int[] playersMoves = new int[4] { 1, 1, 1, 1 };		//Lượt mỗi người chơi
 	private int[] playersRolls = new int[4] { 2, 2, 2, 2 };		//Lượt đổ xí ngầu mỗi người chơi (ban đầu có 2 lượt)
 
+	private Animal _playerAnimal;
 
 	internal PhotonView PunView {
 		get { return _view; }
@@ -56,8 +57,8 @@ public class GameController : MonoBehaviour {
 	void CreateAnimal() {
 		int index = PUNManager._instance.PlayerIndex;
 		GameObject go = PhotonNetwork.Instantiate (_animal [index].name, Vector3.zero, Quaternion.identity, 0) as GameObject;
-		Animal animal = go.GetComponent<Animal>();
-		animal.GitAnimalParent(index);
+		_playerAnimal = go.GetComponent<Animal>();
+		_playerAnimal.GitAnimalParent(index);
 	}
 
 	//Tao cac nguoi choi
@@ -342,9 +343,12 @@ public class GameController : MonoBehaviour {
 			RollDice(playerChosen);
 		}*/
 
+		//Nếu trả lời đúng - Được đổ xí ngầu
 		if (currentAnswerResult [_playerTurn - 1] == true) {
+			debug.text = "Roll";
 			RollDice();
-		} else {
+		} else {	//Nếu trả lời sai - Lượt chơi cho người tiếp theo
+			debug.text = "Next turn";
 			NextTurn();
 		}
 
@@ -352,6 +356,7 @@ public class GameController : MonoBehaviour {
 
 	//Đổ xí ngầu
 	private void RollDice() {
+		_playerAnimal.AddMoveEvent (CheckToRollDice);
 		if (_playerTurn == PUNManager._instance.PlayerIndex+1) {
 			DiceManager._instance._canRoll = true;
 			DiceManager._instance.AddRollDoneEvent(RollDone);
@@ -361,15 +366,24 @@ public class GameController : MonoBehaviour {
 
 	//Đổ xong xí ngầu
 	private void RollDone(int dot) {
+		//Stop animation đổ xí ngầu cho các người chơi khác
+		//Đồng thời gửi cho các người chơi còn lại số xí ngầu mình đổ được
 		DiceManager._instance.StopRoll (dot, PhotonTargets.Others);
+
+		//Nếu là lượt đầu tiên đổ hoặc đổ được 1->5 thì giảm số lượt được đổ đi 1
 		if (playersRolls [_playerTurn-1] > 1 || dot != 6) {
 			_view.RPC("DecreasePlayerRoll", PhotonTargets.All, PUNManager._instance.PlayerIndex);
 		}
 		debug.text = "" + playersRolls [_playerTurn - 1];
-		if (playersRolls [_playerTurn-1] > 0) {
-			RollDice();
+
+		if (_playerAnimal.IsInCage) {
+			if (dot == 6) {
+				_playerAnimal.GoToRoad();
+			} else {
+				CheckToRollDice();
+			}
 		} else {
-			_view.RPC ("NextTurn", PhotonTargets.All);
+			_playerAnimal.Move(dot);
 		}
 	}
 
@@ -405,6 +419,15 @@ public class GameController : MonoBehaviour {
 		}*/
 
 		ShowQuestion();
+	}
+
+	private void CheckToRollDice() {
+		//Nếu còn lượt đổ thì tiếp tục đổ
+		if (playersRolls [_playerTurn-1] > 0) {
+			RollDice();
+		} else {	//Nếu hết lượt đổ thì đến lượt người chơi tiếp theo
+			_view.RPC ("NextTurn", PhotonTargets.All);
+		}
 	}
 
 }

@@ -165,11 +165,11 @@ public class QuestionManager : MonoBehaviour {
 	}
 
 	private IEnumerator CoWaitToHideQuestionTable() {
-		while(PhotonNetwork.time - questionAppearTime < question.Time) {
+		while(question != null && PhotonNetwork.time - questionAppearTime < question.Time) {
 			yield return new WaitForFixedUpdate();
 		}
 
-		if (isAnswered == false && notAnswerEvt != null) {
+		if (question != null && isAnswered == false && notAnswerEvt != null) {
 			notAnswerEvt (question.Time);
 		}
 		//_view.RPC ("DoneCurrentQuestion", PhotonTargets.All, PUNManager._instance.PlayerIndex);
