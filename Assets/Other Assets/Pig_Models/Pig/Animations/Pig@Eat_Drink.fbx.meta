@@ -2,7 +2,49 @@ fileFormatVersion: 2
 guid: e1384a0af9f58784da3bc65d72d51bc1
 ModelImporter:
   serializedVersion: 18
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    100000: armature
+    100002: becken
+    100004: bein_L
+    100006: bein_R
+    100008: fuss_L
+    100010: fuss_L2
+    100012: fuss_R
+    100014: fuss_R2
+    100016: hbein_L
+    100018: hbein_R
+    100020: hfuss_L
+    100022: hfuss_L2
+    100024: hfuss_R
+    100026: hfuss_R2
+    100028: kopf
+    100030: maul
+    100032: //RootNode
+    100034: r_cken
+    100036: root
+    100038: schwanz
+    400000: armature
+    400002: becken
+    400004: bein_L
+    400006: bein_R
+    400008: fuss_L
+    400010: fuss_L2
+    400012: fuss_R
+    400014: fuss_R2
+    400016: hbein_L
+    400018: hbein_R
+    400020: hfuss_L
+    400022: hfuss_L2
+    400024: hfuss_R
+    400026: hfuss_R2
+    400028: kopf
+    400030: maul
+    400032: //RootNode
+    400034: r_cken
+    400036: root
+    400038: schwanz
+    7400000: Default Take
+    11100000: //RootNode
   materials:
     importMaterials: 1
     materialName: 3

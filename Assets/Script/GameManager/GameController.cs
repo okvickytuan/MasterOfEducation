@@ -322,6 +322,7 @@ public class GameController : MonoBehaviour {
 
 	//Hiện kết quả
 	private void ShowIngameQuestionResult() {
+		/*
 		//Tìm người trlời đúng và nhanh nhất in ra
 		double minTime = 100.0;
 		int playerChosen = 0;
@@ -338,14 +339,13 @@ public class GameController : MonoBehaviour {
 			ShowQuestion();
 		} else {
 			debug.text = "Player right: Player " + playerChosen;
-			/*if (playerChosen == PUNManager._instance.PlayerIndex+1) {
-				DiceManager._instance._canRoll = true;
-				DiceManager._instance.AddRollDoneEvent(RollDone);
-				DiceManager._instance.AutoRoll();
-			} else {
-				DiceManager._instance.diceButton.Roll();
-			}*/
 			RollDice(playerChosen);
+		}*/
+
+		if (currentAnswerResult [_playerTurn - 1] == true) {
+			RollDice();
+		} else {
+			NextTurn();
 		}
 
 	}
@@ -353,14 +353,6 @@ public class GameController : MonoBehaviour {
 	//Đổ xí ngầu
 	private void RollDice() {
 		if (_playerTurn == PUNManager._instance.PlayerIndex+1) {
-			DiceManager._instance._canRoll = true;
-			DiceManager._instance.AddRollDoneEvent(RollDone);
-			DiceManager._instance.AutoRoll();
-		}
-	}
-
-	private void RollDice(int playerRoll) {
-		if (playerRoll == PUNManager._instance.PlayerIndex+1) {
 			DiceManager._instance._canRoll = true;
 			DiceManager._instance.AddRollDoneEvent(RollDone);
 			DiceManager._instance.AutoRoll();
@@ -385,7 +377,9 @@ public class GameController : MonoBehaviour {
 	[PunRPC]
 	private void NextTurn() {
 		//Reset lượt đổ xí ngầu của người chơi cũ
-		playersRolls [_playerTurn - 1] = 1;
+		if (playersRolls [_playerTurn - 1] == 0) {
+			playersRolls [_playerTurn - 1] = 1;
+		}
 		//Xoay vòng lượt đến người chơi tiếp theo...
 		_playerTurn = _playerTurn == 4 ? 1 : _playerTurn+1;
 

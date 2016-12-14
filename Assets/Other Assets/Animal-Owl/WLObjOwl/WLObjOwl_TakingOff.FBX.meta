@@ -3,7 +3,63 @@ guid: 6f0078e47d4c4db409945e872b73c335
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
+    100000: Bip001
+    100002: Bip001 1
+    100004: Bip001 Head
+    100006: Bip001 L Calf
+    100008: Bip001 L Foot
+    100010: Bip001 L Forearm
+    100012: Bip001 L Hand
+    100014: Bip001 L Thigh
+    100016: Bip001 L UpperArm
+    100018: Bip001 R Calf
+    100020: Bip001 R Calf 1
+    100022: Bip001 R Forearm
+    100024: Bip001 R Hand
+    100026: Bip001 R Thigh
+    100028: Bip001 R UpperArm
+    100030: Bip001 Spine
+    100032: Bip001 Spine1
+    100034: Circle02
+    100036: Circle03
+    100038: IK Chain01
+    100040: IK Chain02
+    100042: IK Chain03
+    100044: IK Chain04
+    100046: Tail
+    100048: WLObjOwl
+    100050: //RootNode
+    400000: Bip001
+    400002: Bip001 1
+    400004: Bip001 Head
+    400006: Bip001 L Calf
+    400008: Bip001 L Foot
+    400010: Bip001 L Forearm
+    400012: Bip001 L Hand
+    400014: Bip001 L Thigh
+    400016: Bip001 L UpperArm
+    400018: Bip001 R Calf
+    400020: Bip001 R Calf 1
+    400022: Bip001 R Forearm
+    400024: Bip001 R Hand
+    400026: Bip001 R Thigh
+    400028: Bip001 R UpperArm
+    400030: Bip001 Spine
+    400032: Bip001 Spine1
+    400034: Circle02
+    400036: Circle03
+    400038: IK Chain01
+    400040: IK Chain02
+    400042: IK Chain03
+    400044: IK Chain04
+    400046: Tail
+    400048: WLObjOwl
+    400050: //RootNode
+    2300000: WLObjOwl
+    3300000: WLObjOwl
     4300000: WLObjOwl
+    7400000: WLObjOwl_Taking Off_noHeigh
+    11100000: //RootNode
   materials:
     importMaterials: 1
     materialName: 3
