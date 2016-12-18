@@ -132,14 +132,8 @@ public class QuestionManager : MonoBehaviour {
 	public void ShowQuestionTable() {
 
 		iTween.MoveTo (questionTable.gameObject, new Vector3 (questionTable.position.x, questionShow.position.y, 0), 1.0f);
-		WaitToHideQuestionTable ();
-	}
-
-	//Hien thi bang cau hoi cho nhung thanh vien con lai trong phong
-	internal void ShowOtherQuestionTable() {
-		if (isAnswered == false) {
-			_view.RPC ("ShowQuestionTable", PhotonTargets.Others);
-		}
+		if (GameController._instance.PlayerTurn == PUNManager._instance.PlayerIndex+1)
+			StartCoroutine("WaitToHideQuestionTable");
 	}
 
 	internal void PunHideQuestionTable(PhotonTargets target) {
@@ -160,25 +154,26 @@ public class QuestionManager : MonoBehaviour {
 		notAnswerEvt = notAnsEvt;
 	}
 
-	internal void WaitToHideQuestionTable() {
-		StartCoroutine("CoWaitToHideQuestionTable");
-	}
-
-	private IEnumerator CoWaitToHideQuestionTable() {
+	private IEnumerator WaitToHideQuestionTable() {
+		GameController._instance.debug.text = "Wait";
 		while(question != null && PhotonNetwork.time - questionAppearTime < question.Time) {
 			yield return new WaitForFixedUpdate();
 		}
 
-		if (question != null && isAnswered == false && notAnswerEvt != null) {
-			notAnswerEvt (question.Time);
-		}
-		//_view.RPC ("DoneCurrentQuestion", PhotonTargets.All, PUNManager._instance.PlayerIndex);
-		DoneCurrentQuestion (PUNManager._instance.PlayerIndex);
+
+		_view.RPC ("DoneCurrentQuestion", PhotonTargets.All);
+		//DoneCurrentQuestion ();
 	}
 
 	//Sau khi hết thời gian hiển thị câu hỏi, từng người chơi báo cáo kết quả cho các người chơi còn lại
 	[PunRPC]
-	private void DoneCurrentQuestion(int playerIndex) {
+	private void DoneCurrentQuestion() {
+		GameController._instance.debug.text = "Done";
+		if (question != null && isAnswered == false && notAnswerEvt != null && 
+		    !GameController._instance.CurrentAnswerResult[PUNManager._instance.PlayerIndex]) {
+			notAnswerEvt (question.Time);
+		}
+
 		//Nếu tất cả người chơi đều hết thời gian trả lời...
 		HideQuestionTable ();
 		GameController._instance.ShowQuestionResult ();

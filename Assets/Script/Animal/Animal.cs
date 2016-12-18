@@ -62,8 +62,8 @@ public class Animal : MonoBehaviour {
 		if (_isInCage) {
 			return;
 		}
-		int areaIndex = int.Parse(transform.parent.name);
-		int area = int.Parse(transform.parent.parent.name);
+		int areaIndex = CurrentAreaIndex;
+		int area = CurrentArea;
 
 		int nextArea = (areaIndex + step) <= _stepPerArea ? area : ((area + 1) > 4 ? 1 : (area + 1));
 		int nextAreaIndex = (areaIndex + step) <= _stepPerArea ? (areaIndex + step) : (areaIndex + step - _stepPerArea);
@@ -83,10 +83,12 @@ public class Animal : MonoBehaviour {
 	}
 
 	private IEnumerator StepByStepTo(int area, int areaIndex) {
-		GameController._instance.debug.text = area + " - " + areaIndex;
-		while (IsInCage && CurrentArea != area && CurrentAreaIndex != areaIndex) {
-			int nextArea = (areaIndex + 1) <= _stepPerArea ? area : ((area + 1) > 4 ? 1 : (area + 1));
-			int nextAreaIndex = (areaIndex + 1) <= _stepPerArea ? (areaIndex + 1) : (areaIndex + 1 - _stepPerArea);
+
+		while (CurrentArea != area || CurrentAreaIndex != areaIndex) {
+			int nextArea = (CurrentAreaIndex + 1) <= _stepPerArea ? 
+				CurrentArea : ((CurrentArea + 1) > 4 ? 1 : (CurrentArea + 1));
+			int nextAreaIndex = (CurrentAreaIndex + 1) <= _stepPerArea ? 
+				(CurrentAreaIndex + 1) : (CurrentAreaIndex + 1 - _stepPerArea);
 			//JumpTo(nextArea, nextAreaIndex);
 			_view.RPC ("JumpTo", PhotonTargets.All, nextArea, nextAreaIndex);
 			yield return new WaitForSeconds(1.0f);
@@ -98,6 +100,7 @@ public class Animal : MonoBehaviour {
 
 	[PunRPC]
 	private void JumpTo(int area, int areaIndex) {
+		GameController._instance.debug.text = area + " - " + areaIndex;
 		transform.parent = _way.FindChild ("" + area).FindChild ("" + areaIndex);
 		transform.localPosition = Vector3.zero;
 		transform.localRotation = Quaternion.identity;

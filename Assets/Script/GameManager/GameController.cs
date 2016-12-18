@@ -41,6 +41,10 @@ public class GameController : MonoBehaviour {
 		get { return _playerTurn; }
 	}
 
+	internal bool[] CurrentAnswerResult {
+		get { return currentAnswerResult; }
+	}
+
 	void Awake() {
 		_instance = this;
 	}
@@ -255,7 +259,7 @@ public class GameController : MonoBehaviour {
 			RollDice();
 			debug.text = "Player first is: Player " + _playerTurn;
 		}
-		ResetPlayersAnswerResult ();
+		//ResetPlayersAnswerResult ();
 	}
 
 	//Reset câu trả lời của các người chơi
@@ -301,7 +305,8 @@ public class GameController : MonoBehaviour {
 	}
 
 	private void NotAnswer(double questionTime) {
-		_view.RPC ("ChangeCurrentAnswer", PhotonTargets.All, PUNManager._instance.PlayerIndex, questionTime, false);
+		if (_playerTurn == PUNManager._instance.PlayerIndex+1)
+			_view.RPC ("ChangeCurrentAnswer", PhotonTargets.All, PUNManager._instance.PlayerIndex, questionTime, false);
 	}
 
 	[PunRPC]
