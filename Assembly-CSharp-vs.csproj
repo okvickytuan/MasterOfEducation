@@ -252,7 +252,7 @@
      <Compile Include="Assets\PhotonChatApi\IChatClientListener.cs" />
      <Compile Include="Assets\Script\Animal\Animal.cs" />
      <Compile Include="Assets\Script\Camera\CameraPlayer.cs" />
-     <Compile Include="Assets\Script\DesignPlayer\DesignPlayerUpdate.cs" />
+     <Compile Include="Assets\Script\DesignPlayer\DesignPlayerManager.cs" />
      <Compile Include="Assets\Script\GameManager\GameConfig.cs" />
      <Compile Include="Assets\Script\GameManager\GameController.cs" />
      <Compile Include="Assets\Script\GameManager\GameDelegate.cs" />
@@ -276,6 +276,10 @@
      <Compile Include="Assets\Script\UI\DesignPlayer\LadderScrolling.cs" />
      <Compile Include="Assets\Script\UI\FPSDisplay.cs" />
      <Compile Include="Assets\Script\UI\Ingame\Dice.cs" />
+     <Compile Include="Assets\Ultimate Game Tools\MeshSimplify\Data\Scripts\SimplifyMeshPreview.cs" />
+     <Compile Include="Assets\Ultimate Game Tools\MeshSimplify\Scripts\MeshSimplify.cs" />
+     <Compile Include="Assets\Ultimate Game Tools\MeshSimplify\Scripts\MeshUniqueVertices.cs" />
+     <Compile Include="Assets\Ultimate Game Tools\MeshSimplify\Scripts\Simplifier.cs" />
      <None Include="Assets\Other Assets\Island pack\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Other Assets\Island pack\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\NoiseEffectShaderRGB.shader" />
      <None Include="Assets\Other Assets\Island pack\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_DepthOfField\SeparableWeightedBlurDof34.shader" />
@@ -283,6 +287,7 @@
      <None Include="Assets\Other Assets\unity-ui-extensions\Shaders\SoftMaskShaderText.shader" />
      <None Include="Assets\Other Assets\Island pack\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\ShowAlphaChannel.shader" />
      <None Include="Assets\Other Assets\Island pack\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\GlowConeTap.shader" />
+     <None Include="Assets\Ultimate Game Tools\MeshSimplify\!Readme.txt" />
      <None Include="Assets\Other Assets\Island pack\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\SunShaftsComposite.shader" />
      <None Include="Assets\Other Assets\Island pack\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\ColorCorrectionCurves.shader" />
      <None Include="Assets\Other Assets\Island pack\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\ScreenSpaceAmbientObscurance.shader" />
@@ -310,6 +315,8 @@
      <None Include="Assets\Other Assets\Island pack\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\Contrast Stretch\Apply.shader" />
      <None Include="Assets\Other Assets\Island pack\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\frag_ao.cginc" />
      <None Include="Assets\Plugins\release_history.txt" />
+     <None Include="Assets\Ultimate Game Tools\MeshSimplify\Data\Shaders\StandardSpecularTwoSided.shader" />
+     <None Include="Assets\Ultimate Game Tools\MeshSimplify\Data\Shaders\Wireframe.shader" />
      <None Include="Assets\Other Assets\Island pack\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_DepthOfField\DepthOfField34.shader" />
      <None Include="Assets\Other Assets\Island pack\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\MobileBlur.shader" />
      <None Include="Assets\Other Assets\Island pack\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\SSAOShader.shader" />

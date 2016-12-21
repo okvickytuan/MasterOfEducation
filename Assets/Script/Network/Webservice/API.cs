@@ -18,6 +18,10 @@ public enum API {
 	DatabaseCannotConnect = 6,
 	DatabaseConnectionTimeOut = 7,
 
+	//CLOSEST
+	ChangeClosestSuccess = 8,
+	ChangeClosestFailed = 9,
+
 	//QUESTION
 	AnswerCorrect = 12,
 	AnswerWrong = 13,

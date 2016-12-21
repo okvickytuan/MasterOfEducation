@@ -39,6 +39,8 @@ public class LoginManager : MonoBehaviour {
 		}
 		if ((API)int.Parse (w.text) == API.UsernameHasAlreadyExist) {
 			Debug.Log ("Username has already exist");
+		} else if ((API)int.Parse (w.text) == API.RegisterFailed) {
+			Debug.Log ("Register failed");
 		} else {
 			Debug.Log ("Register successful");
 		}
@@ -60,7 +62,12 @@ public class LoginManager : MonoBehaviour {
 		if (jsonStr != "" && (API)int.Parse (node["api"]) == API.LoginSuccess) {
 			PlayerInfo.id = node["id"];
 			Debug.Log ("Login Success");
-			Application.LoadLevel("DesignCharacter");
+			if (node["closest"] == null) {
+				Application.LoadLevel("DesignCharacter");
+			} else {
+				PlayerClosest.ChangeClosest(node["closest"]);
+				Application.LoadLevel("Lobby");
+			}
 		} else {
 			Debug.Log ("Login failed");
 		}

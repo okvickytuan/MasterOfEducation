@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using SimpleJSON;
 
 public enum CLOSEST_TYPE {
 	BODY,
@@ -155,5 +156,37 @@ public class PlayerClosest {
 	internal static COLOR_TYPE _curHairColor = COLOR_TYPE.RED;
 	internal static HAT_COLOR _curHatColor = HAT_COLOR.HAT_1;
 	internal static WEAPON_COLOR _curWeaponColor = WEAPON_COLOR.COPPER;
+
+	internal static void ChangeClosest(JSONNode closestNode) {
+		_curBody = (BODY_TYPE)closestNode ["Body"].AsInt;
+		_curHair = (HAIR_TYPE)closestNode ["Hair"] ["Type"].AsInt;
+		_curFace = (SKIN_TYPE)closestNode ["Face"].AsInt;
+		_curBeard = (BEARD_TYPE)closestNode ["Beard"] ["Type"].AsInt;
+		_curHat = (HAT_TYPE)closestNode ["Hat"] ["Type"].AsInt;
+		_curBacket = (BACKET_TYPE)closestNode ["Backet"].AsInt;
+		_curSkin = (SKIN_TYPE)closestNode ["Skin"].AsInt;
+		_curWeapon = (WEAPON_TYPE)closestNode ["Weapon"] ["Type"].AsInt;
+
+		_curHairColor = (COLOR_TYPE)closestNode ["Hair"] ["Color"].AsInt;
+		_curBeardColor = (COLOR_TYPE)closestNode ["Beard"] ["Color"].AsInt;
+		_curHatColor = (HAT_COLOR)closestNode ["Hat"] ["Color"].AsInt;
+		_curWeaponColor = (WEAPON_COLOR)closestNode ["Weapon"] ["Color"].AsInt;
+	}
+
+	internal static void ChangeClosest() {
+		_curBody = PlayerAnimation._instance.CurBody;
+		_curHair = PlayerAnimation._instance.CurHair;
+		_curFace = PlayerAnimation._instance.CurFace;
+		_curBeard = PlayerAnimation._instance.CurBeard;
+		_curHat = PlayerAnimation._instance.CurHat;
+		_curBacket = PlayerAnimation._instance.CurBacket;
+		_curSkin = PlayerAnimation._instance.CurSkin;
+		_curWeapon = PlayerAnimation._instance.CurWeapon;
+		
+		_curHairColor = PlayerAnimation._instance.CurHairColor;
+		_curBeardColor = PlayerAnimation._instance.CurBeardColor;
+		_curHatColor = PlayerAnimation._instance.CurHatColor;
+		_curWeaponColor = PlayerAnimation._instance.CurWeaponColor;
+	}
 
 }

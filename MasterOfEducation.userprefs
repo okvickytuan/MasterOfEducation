@@ -1,9 +1,16 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\GameManager\GameController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\Player\PlayerClosest.cs">
     <Files>
-      <File FileName="Assets\Script\GameManager\GameController.cs" Line="390" Column="54" />
-      <File FileName="Assets\Script\Network\Webservice\Question\QuestionManager.cs" Line="83" Column="7" />
+      <File FileName="Assets\Script\Player\PlayerClosest.cs" Line="189" Column="54" />
+      <File FileName="Assets\Script\GameManager\GameController.cs" Line="390" Column="23" />
+      <File FileName="Assets\Script\Network\Webservice\Question\QuestionManager.cs" Line="60" Column="3" />
+      <File FileName="Assets\Script\Network\Webservice\API.cs" Line="11" Column="6" />
+      <File FileName="Assets\Script\Network\Webservice\Login\LoginManager.cs" Line="69" Column="36" />
+      <File FileName="Assets\Script\GameManager\GameConfig.cs" Line="21" Column="1" />
+      <File FileName="Assets\Script\Player\PlayerAnimation.cs" Line="81" Column="17" />
+      <File FileName="Assets\Script\DesignPlayer\DesignPlayerManager.cs" Line="56" Column="6" />
+      <File FileName="Assets\Script\Network\Webservice\KeepConnection.cs" Line="16" Column="40" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

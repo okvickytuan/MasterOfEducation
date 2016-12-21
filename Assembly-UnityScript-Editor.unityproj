@@ -56,6 +56,7 @@
      <None Include="Assets\Other Assets\unity-ui-extensions\Shaders\SoftMaskShaderText.shader" />
      <None Include="Assets\Other Assets\Island pack\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\ShowAlphaChannel.shader" />
      <None Include="Assets\Other Assets\Island pack\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\GlowConeTap.shader" />
+     <None Include="Assets\Ultimate Game Tools\MeshSimplify\!Readme.txt" />
      <None Include="Assets\Other Assets\Island pack\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\SunShaftsComposite.shader" />
      <None Include="Assets\Other Assets\Island pack\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\ColorCorrectionCurves.shader" />
      <None Include="Assets\Other Assets\Island pack\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\ScreenSpaceAmbientObscurance.shader" />
@@ -83,6 +84,8 @@
      <None Include="Assets\Other Assets\Island pack\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\Contrast Stretch\Apply.shader" />
      <None Include="Assets\Other Assets\Island pack\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\frag_ao.cginc" />
      <None Include="Assets\Plugins\release_history.txt" />
+     <None Include="Assets\Ultimate Game Tools\MeshSimplify\Data\Shaders\StandardSpecularTwoSided.shader" />
+     <None Include="Assets\Ultimate Game Tools\MeshSimplify\Data\Shaders\Wireframe.shader" />
      <None Include="Assets\Other Assets\Island pack\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_DepthOfField\DepthOfField34.shader" />
      <None Include="Assets\Other Assets\Island pack\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\MobileBlur.shader" />
      <None Include="Assets\Other Assets\Island pack\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\SSAOShader.shader" />
