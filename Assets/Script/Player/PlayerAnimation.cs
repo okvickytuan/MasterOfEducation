@@ -79,7 +79,7 @@ public class PlayerAnimation : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		ChangeBody (PlayerClosest._curBody);
+		/*ChangeBody (PlayerClosest._curBody);
 		ChangeHair (PlayerClosest._curHair);
 		ChangeBeard (PlayerClosest._curBeard);	
 		ChangeHat (PlayerClosest._curHat);
@@ -91,8 +91,30 @@ public class PlayerAnimation : MonoBehaviour {
 		ChangeBeardColor (PlayerClosest._curBeardColor);
 		ChangeHairColor (PlayerClosest._curHairColor);
 		ChangeHatColor (PlayerClosest._curHatColor);
-		ChangeWeaponColor (PlayerClosest._curWeaponColor);
+		ChangeWeaponColor (PlayerClosest._curWeaponColor);*/
+		PhotonView view = GetComponent<PhotonView> ();
+		if (view != null) {
+			ChangeClosest ();
+		} else {
+			view.RPC("ChangeClosest", PhotonTargets.All);
+		}
+	}
+
+	[PunRPC]
+	private void ChangeClosest() {
+		ChangeBody (PlayerClosest._curBody);
+		ChangeHair (PlayerClosest._curHair);
+		ChangeBeard (PlayerClosest._curBeard);	
+		ChangeHat (PlayerClosest._curHat);
+		ChangeBacket (PlayerClosest._curBacket);
+		ChangeSkin (PlayerClosest._curSkin);
+		ChangeFace (PlayerClosest._curFace);
+		ChangeWeapon (PlayerClosest._curWeapon);
 		
+		ChangeBeardColor (PlayerClosest._curBeardColor);
+		ChangeHairColor (PlayerClosest._curHairColor);
+		ChangeHatColor (PlayerClosest._curHatColor);
+		ChangeWeaponColor (PlayerClosest._curWeaponColor);
 	}
 
 	/*public void ChangeBody(int type) {

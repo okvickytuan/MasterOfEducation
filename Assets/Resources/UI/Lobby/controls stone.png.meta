@@ -1,9 +1,35 @@
 fileFormatVersion: 2
 guid: 9db25ae5ba57c3e4d8801a4f6dd37ce2
-timeCreated: 1479660860
+timeCreated: 1482769185
 licenseType: Pro
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: controls stone_0
+    21300002: controls stone_1
+    21300004: controls stone_2
+    21300006: controls stone_5
+    21300008: controls stone_6
+    21300010: controls stone_7
+    21300012: controls stone_8
+    21300014: controls stone_9
+    21300016: controls stone_10
+    21300018: controls stone_11
+    21300020: controls stone_12
+    21300022: controls stone_13
+    21300024: controls stone_14
+    21300026: controls stone_15
+    21300028: controls stone_16
+    21300030: controls stone_17
+    21300032: controls stone_18
+    21300034: controls stone_19
+    21300036: controls stone_20
+    21300038: controls stone_21
+    21300040: controls stone_22
+    21300042: controls stone_23
+    21300044: controls stone_24
+    21300046: controls stone_25
+    21300048: controls stone_26
+    21300050: controls stone_27
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -48,7 +74,267 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: controls stone_0
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 440
+        width: 95
+        height: 100
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: controls stone_1
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 435
+        width: 16
+        height: 80
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: controls stone_2
+      rect:
+        serializedVersion: 2
+        x: 601
+        y: 435
+        width: 48
+        height: 80
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: controls stone_5
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 331
+        width: 77
+        height: 91
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: controls stone_6
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 331
+        width: 45
+        height: 91
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: controls stone_7
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 331
+        width: 16
+        height: 88
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: controls stone_8
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 331
+        width: 16
+        height: 88
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: controls stone_9
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 331
+        width: 46
+        height: 91
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: controls stone_10
+      rect:
+        serializedVersion: 2
+        x: 369
+        y: 334
+        width: 78
+        height: 91
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: controls stone_11
+      rect:
+        serializedVersion: 2
+        x: 497
+        y: 339
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: controls stone_12
+      rect:
+        serializedVersion: 2
+        x: 601
+        y: 371
+        width: 64
+        height: 16
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: controls stone_13
+      rect:
+        serializedVersion: 2
+        x: 709
+        y: 343
+        width: 64
+        height: 80
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: controls stone_14
+      rect:
+        serializedVersion: 2
+        x: 797
+        y: 343
+        width: 64
+        height: 80
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: controls stone_15
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 235
+        width: 91
+        height: 46
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: controls stone_16
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 238
+        width: 91
+        height: 45
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: controls stone_17
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 171
+        width: 72
+        height: 80
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: controls stone_18
+      rect:
+        serializedVersion: 2
+        x: 472
+        y: 171
+        width: 65
+        height: 80
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: controls stone_19
+      rect:
+        serializedVersion: 2
+        x: 585
+        y: 171
+        width: 64
+        height: 80
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: controls stone_20
+      rect:
+        serializedVersion: 2
+        x: 673
+        y: 171
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: controls stone_21
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 139
+        width: 94
+        height: 78
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: controls stone_22
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 142
+        width: 91
+        height: 77
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: controls stone_23
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 3
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: controls stone_24
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 3
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 25, y: 27, z: 32, w: 27}
+    - name: controls stone_25
+      rect:
+        serializedVersion: 2
+        x: 361
+        y: 3
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 39, y: 46, z: 42, w: 39}
+    - name: controls stone_26
+      rect:
+        serializedVersion: 2
+        x: 505
+        y: 3
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: controls stone_27
+      rect:
+        serializedVersion: 2
+        x: 656
+        y: 7
+        width: 129
+        height: 129
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
   assetBundleName: 
