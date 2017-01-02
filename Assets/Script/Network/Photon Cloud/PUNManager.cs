@@ -85,6 +85,7 @@ public class PUNManager : ConnectAndJoinRandom {
 		for (int i=0; i<=playerIndex; i++) {
 			this.playerArrImg [i].enabled = true;
 		}
+		print (this.playerArrImg [0].enabled);
 	}
 
 }

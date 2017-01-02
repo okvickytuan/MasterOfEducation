@@ -69,6 +69,12 @@ public class GameController : MonoBehaviour {
 	void CreatePlayer() {
 		GameObject player = PhotonNetwork.Instantiate ("Player", Vector3.zero, Quaternion.identity, 0) as GameObject;
 		player.GetComponent<PlayerNetwork> ().GitParent (PUNManager._instance.PlayerIndex);
+		player.GetComponent<PlayerAnimation> ().ChangeClosest (
+			PlayerClosest._curBody, PlayerClosest._curHair, PlayerClosest._curBeard,
+			PlayerClosest._curHat, PlayerClosest._curBacket, PlayerClosest._curSkin,
+			PlayerClosest._curFace, PlayerClosest._curWeapon, PlayerClosest._curBeardColor,
+			PlayerClosest._curHairColor, PlayerClosest._curHatColor, PlayerClosest._curWeaponColor);
+
 	}
 
 	//Voi moi nguoi choi vao game, kiem tra tat ca nguoi choi da load xong scene chua
@@ -361,6 +367,8 @@ public class GameController : MonoBehaviour {
 
 	//Đổ xí ngầu
 	private void RollDice() {
+		UIEffectManager._instance.ShowPlayerTurnEffect (_playerTurn);
+
 		_playerAnimal.AddMoveEvent (CheckToRollDice);
 		if (_playerTurn == PUNManager._instance.PlayerIndex+1) {
 			DiceManager._instance._canRoll = true;

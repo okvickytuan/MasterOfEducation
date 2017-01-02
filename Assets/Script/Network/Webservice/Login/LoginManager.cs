@@ -10,6 +10,8 @@ public class LoginManager : MonoBehaviour {
 	public InputField usernameField;
 	public InputField passwordField;
 
+	public Text logText;
+
 	// Use this for initialization
 	void Start () {
 
@@ -39,10 +41,13 @@ public class LoginManager : MonoBehaviour {
 		}
 		if ((API)int.Parse (w.text) == API.UsernameHasAlreadyExist) {
 			Debug.Log ("Username has already exist");
+			logText.text = "Tên tài khoản đã tồn tại";
 		} else if ((API)int.Parse (w.text) == API.RegisterFailed) {
 			Debug.Log ("Register failed");
+			logText.text = "Đăng Ký Thất Bại";
 		} else {
 			Debug.Log ("Register successful");
+			logText.text = "Đăng Ký Thành Công";
 		}
 	}
 
@@ -61,6 +66,7 @@ public class LoginManager : MonoBehaviour {
 		JSONNode node = JSON.Parse (jsonStr);
 		if (jsonStr != "" && (API)int.Parse (node["api"]) == API.LoginSuccess) {
 			PlayerInfo.id = node["id"];
+			PlayerInfo.username = node["username"];
 			Debug.Log ("Login Success");
 			if (node["closest"] == null) {
 				Application.LoadLevel("DesignCharacter");
@@ -70,6 +76,7 @@ public class LoginManager : MonoBehaviour {
 			}
 		} else {
 			Debug.Log ("Login failed");
+			logText.text = "Đăng Nhập Thất Bại";
 		}
 	}
 

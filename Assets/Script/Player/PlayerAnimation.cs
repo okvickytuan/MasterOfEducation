@@ -9,6 +9,8 @@ public class PlayerAnimation : MonoBehaviour {
 	public Transform _headSlot;
 	public Transform _weaponSlot;
 
+	private PhotonView view = null;
+
 	private BODY_TYPE _curBody = BODY_TYPE.FAT;
 	private HAIR_TYPE _curHair = HAIR_TYPE.NONE;
 	private BEARD_TYPE _curBeard = BEARD_TYPE.NONE;
@@ -92,15 +94,12 @@ public class PlayerAnimation : MonoBehaviour {
 		ChangeHairColor (PlayerClosest._curHairColor);
 		ChangeHatColor (PlayerClosest._curHatColor);
 		ChangeWeaponColor (PlayerClosest._curWeaponColor);*/
-		PhotonView view = GetComponent<PhotonView> ();
-		if (view != null) {
+		view = GetComponent<PhotonView> ();
+		if (view == null) {
 			ChangeClosest ();
-		} else {
-			view.RPC("ChangeClosest", PhotonTargets.All);
 		}
 	}
-
-	[PunRPC]
+	
 	private void ChangeClosest() {
 		ChangeBody (PlayerClosest._curBody);
 		ChangeHair (PlayerClosest._curHair);
@@ -115,6 +114,38 @@ public class PlayerAnimation : MonoBehaviour {
 		ChangeHairColor (PlayerClosest._curHairColor);
 		ChangeHatColor (PlayerClosest._curHatColor);
 		ChangeWeaponColor (PlayerClosest._curWeaponColor);
+	}
+
+	internal void ChangeClosest(BODY_TYPE body, HAIR_TYPE hair, BEARD_TYPE beard, 
+	                            HAT_TYPE hat, BACKET_TYPE backet, SKIN_TYPE skin, 
+	                            SKIN_TYPE face, WEAPON_TYPE weapon,
+	                            COLOR_TYPE beardColor, COLOR_TYPE hairColor,
+	                            HAT_COLOR hatColor, WEAPON_COLOR weaponColor) {
+		GetComponent<PhotonView>().RPC("PunChangeClosest", PhotonTargets.All,
+		                               (int)body, (int)hair, (int)beard, (int)hat, 
+		                               (int)backet, (int)skin, (int)face, (int)weapon, 
+		                               (int)beardColor, (int)hairColor, 
+		                               (int)hatColor, (int)weaponColor);
+	}
+
+	[PunRPC]
+	private void PunChangeClosest(int body, int hair, int beard, int hat, 
+	                           int backet, int skin, int face, int weapon,
+	                           int beardColor, int hairColor,
+	                           int hatColor, int weaponColor) {
+		ChangeBody ((BODY_TYPE)body);
+		ChangeHair ((HAIR_TYPE)hair);
+		ChangeBeard ((BEARD_TYPE)beard);	
+		ChangeHat ((HAT_TYPE)hat);
+		ChangeBacket ((BACKET_TYPE)backet);
+		ChangeSkin ((SKIN_TYPE)skin);
+		ChangeFace ((SKIN_TYPE)face);
+		ChangeWeapon ((WEAPON_TYPE)weapon);
+		
+		ChangeBeardColor ((COLOR_TYPE)beardColor);
+		ChangeHairColor ((COLOR_TYPE)hairColor);
+		ChangeHatColor ((HAT_COLOR)hatColor);
+		ChangeWeaponColor ((WEAPON_COLOR)weaponColor);
 	}
 
 	/*public void ChangeBody(int type) {

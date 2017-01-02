@@ -3,60 +3,61 @@ using System.Collections;
 
 public class Animal : MonoBehaviour {
 
-	private PhotonView _view;
-	private int _playerIndex;
+	protected PhotonView _view;
+	protected int _playerIndex = -1;
 
-	private bool _isInCage = true;
-	private Transform _way;
+	protected bool _isInCage = true;
+	protected Transform _way;
 
-	private int _stepPerArea = 11;
+	protected int _stepPerArea = 11;
 
-	private event del_no_param_no_return moveCompleteEvt = null;
+	protected event del_no_param_no_return moveCompleteEvt = null;
 
-	private int[] _destination = new int[2];
+	protected int[] _destination = new int[2];
 
 	internal bool IsInCage {
 		get { return _isInCage; }
 	}
 
-	private int CurrentArea {
+	protected int CurrentArea {
 		get {
 			return IsInCage ? 0 : int.Parse(transform.parent.parent.name);
 		}
 	}
 
-	private int CurrentAreaIndex {
+	protected int CurrentAreaIndex {
 		get {
 			return IsInCage ? 0 : int.Parse(transform.parent.name);
 		}
 	}
 
 	// Use this for initialization
-	void Start () {
+	protected virtual void Start () {
 		_view = GetComponent<PhotonView> ();
 		_way = GameObject.Find ("Way").transform;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
 	}
 
 	internal void AddMoveEvent(del_no_param_no_return moveEvt) {
 		moveCompleteEvt = moveEvt;
 	}
 
+	protected virtual void MoveComplete() {
+		if (moveCompleteEvt != null) {
+			moveCompleteEvt ();
+		}
+	}
+
 	internal void GoToCage(int playerIndex) {
 		GetComponent<PhotonView>().RPC ("PunGoToCage", PhotonTargets.All, playerIndex);
 	}
 
-	//Về chuồng
+	//Ve chuong
 	[PunRPC]
-	void PunGoToCage(int playerIndex) {
-		this._playerIndex = playerIndex;
+	protected void PunGoToCage(int playerIndex) {
+		_playerIndex = playerIndex;
 		this._isInCage = true;
 
-		transform.parent = GameObject.Find ("Player " + (playerIndex+1)).transform.FindChild("animalSlot");
+		transform.parent = GameObject.Find ("Player " + (_playerIndex+1)).transform.FindChild("animalSlot");
 		transform.localPosition = Vector3.zero;
 		Vector3 euler = transform.eulerAngles;
 		euler.y = Random.Range (0, 360);
@@ -85,38 +86,29 @@ public class Animal : MonoBehaviour {
 			Animal animal = GetAnimalInArea (tmpArea [0], tmpArea [1]);
 			//Nếu có con thú và chưa phải vị trí cuối cùng thì không được đi
 			if (animal != null && (tmpArea [0] != nextArea || tmpArea [1] != nextAreaIndex)) {
-				if (moveCompleteEvt != null) {
-					moveCompleteEvt ();
-				}
+				MoveComplete();
 				return;
 			}
 			//Nếu nước đi là nước xuất phát và chưa phải vị trí cuối cùng thì không dc đi
 			if (tmpArea[0] == _destination[0] && tmpArea[1] == _destination[1] &&
 			    (tmpArea [0] != nextArea || tmpArea [1] != nextAreaIndex)) {
-				if (moveCompleteEvt != null) {
-					moveCompleteEvt ();
-				}
+				MoveComplete();
 				return;
 			}
 		} while (tmpArea[0] != nextArea || tmpArea[1] != nextAreaIndex);
 
-		GameController._instance.debug.text = area + "-" + areaIndex + " -> " + step + " -> " + nextArea + "-" + nextAreaIndex;
+		//GameController._instance.debug.text = area + "-" + areaIndex + " -> " + step + " -> " + nextArea + "-" + nextAreaIndex;
 
 		//Di chuyển từng bước 1 đến đích
 		StartCoroutine(StepByStepTo(nextArea, nextAreaIndex));
 	}
 
 	//Xuất quân
-	internal void GoToRoad() {
-		_isInCage = false;
-		_destination = new int[2] { this._playerIndex + 1, 1 };
-		_view.RPC ("JumpTo", PhotonTargets.All, this._playerIndex + 1, 1);
-		if (moveCompleteEvt != null) {
-			moveCompleteEvt();
-		}
+	internal virtual void GoToRoad() {
+
 	}
 
-	private IEnumerator StepByStepTo(int area, int areaIndex) {
+	protected IEnumerator StepByStepTo(int area, int areaIndex) {
 		//Di chuyển từng bước 1 cho đến khi tới đích
 		while (CurrentArea != area || CurrentAreaIndex != areaIndex) {
 			/*int nextArea = (CurrentAreaIndex + 1) <= _stepPerArea ? 
@@ -126,7 +118,7 @@ public class Animal : MonoBehaviour {
 			int[] nextStep = GetNextArea(CurrentArea, CurrentAreaIndex);
 			//JumpTo(nextArea, nextAreaIndex);
 			_view.RPC ("JumpTo", PhotonTargets.All, nextStep[0], nextStep[1]);
-			yield return new WaitForSeconds(1.0f);
+			yield return new WaitForSeconds(0.6f);
 		}
 		if (CurrentArea == _destination [0] && CurrentAreaIndex == _destination [1]) {
 			GameController._instance.ShowWin();
@@ -137,8 +129,8 @@ public class Animal : MonoBehaviour {
 
 	//Nhảy tới ô nào đó
 	[PunRPC]
-	private void JumpTo(int area, int areaIndex) {
-		Transform des = _way.FindChild ("" + area).FindChild ("" + areaIndex);
+	protected virtual void JumpTo(int area, int areaIndex) {
+		/*Transform des = _way.FindChild ("" + area).FindChild ("" + areaIndex);
 
 		//Nếu có thú thì đá
 		Animal animal = GetAnimalInArea (area, areaIndex);
@@ -147,16 +139,16 @@ public class Animal : MonoBehaviour {
 		}
 		transform.parent = des;
 		transform.localPosition = Vector3.zero;
-		transform.localRotation = Quaternion.identity;
+		transform.localRotation = Quaternion.identity;*/
 	}
 
 	//Đá thú về chuồng
-	private void Kick(Animal player) {
+	protected void Kick(Animal player) {
 		player.GoToCage (player._playerIndex);
 	}
 
 	//Lấy nước đi kế tiếp
-	private int[] GetNextArea(int area, int areaIndex) {
+	protected int[] GetNextArea(int area, int areaIndex) {
 		int nextArea = (areaIndex + 1) <= _stepPerArea ? 
 			area : ((area + 1) > 4 ? 1 : (area + 1));
 		int nextAreaIndex = (areaIndex + 1) <= _stepPerArea ? 
@@ -165,10 +157,10 @@ public class Animal : MonoBehaviour {
 	}
 
 	//Lấy animal ở nước đi nào đó, nếu không có thú trả về null
-	private Animal GetAnimalInArea(int area, int areaIndex) {
+	protected Animal GetAnimalInArea(int area, int areaIndex) {
 		Transform des = _way.FindChild ("" + area).FindChild ("" + areaIndex);
-		if (des.childCount > 0)
-			return des.GetChild(0).GetComponent<Animal>();
+		if (des.childCount > 1)
+			return des.GetComponentInChildren<Animal> ();
 		return null;
 	}
 
