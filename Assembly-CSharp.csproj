@@ -39,10 +39,10 @@
 	<Reference Include="System.Core" />
 	<Reference Include="System.Xml.Linq" />
 	<Reference Include="UnityEngine">
-	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	  <HintPath>E:/Hoctap/unity/caidat/Editor/Data/Managed/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
-	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	  <HintPath>E:/Hoctap/unity/caidat/Editor/Data/Managed/UnityEditor.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>
@@ -251,12 +251,14 @@
      <Compile Include="Assets\PhotonChatApi\ChatUserStatus.cs" />
      <Compile Include="Assets\PhotonChatApi\IChatClientListener.cs" />
      <Compile Include="Assets\Script\Animal\Animal.cs" />
+     <Compile Include="Assets\Script\Animal\Owl.cs" />
      <Compile Include="Assets\Script\Camera\CameraPlayer.cs" />
      <Compile Include="Assets\Script\DesignPlayer\DesignPlayerManager.cs" />
      <Compile Include="Assets\Script\GameManager\GameConfig.cs" />
      <Compile Include="Assets\Script\GameManager\GameController.cs" />
      <Compile Include="Assets\Script\GameManager\GameDelegate.cs" />
      <Compile Include="Assets\Script\GameManager\GameState.cs" />
+     <Compile Include="Assets\Script\GameManager\UIEffectManager.cs" />
      <Compile Include="Assets\Script\InputManager\TouchHandle.cs" />
      <Compile Include="Assets\Script\Network\Photon Cloud\PUNManager.cs" />
      <Compile Include="Assets\Script\Network\Webservice\API.cs" />
@@ -372,25 +374,25 @@
      <None Include="Assets\Other Assets\Island pack\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\BlurAndFlares.shader" />
      <None Include="Assets\Other Assets\Island pack\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\BlendForBloom.shader" />
  <Reference Include="UnityEngine.UI">
- <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ <HintPath>E:/Hoctap/unity/caidat/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
- <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ <HintPath>E:/Hoctap/unity/caidat/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Analytics">
- <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
+ <HintPath>E:/Hoctap/unity/caidat/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
  <Reference Include="ICSharpCode.SharpZipLib">
- <HintPath>C:/Users/PC/Documents/UnityExercise/MasterOfEducation/Assets/Plugins/ICSharpCode.SharpZipLib.dll</HintPath>
+ <HintPath>E:/Hoctap/unity/project/MasterOfEducation/Assets/Plugins/ICSharpCode.SharpZipLib.dll</HintPath>
  </Reference>
  <Reference Include="Photon3Unity3D">
- <HintPath>C:/Users/PC/Documents/UnityExercise/MasterOfEducation/Assets/Plugins/Photon3Unity3D.dll</HintPath>
+ <HintPath>E:/Hoctap/unity/project/MasterOfEducation/Assets/Plugins/Photon3Unity3D.dll</HintPath>
  </Reference>
  <Reference Include="websocket-sharp">
- <HintPath>C:/Users/PC/Documents/UnityExercise/MasterOfEducation/Assets/Plugins/WebSocket/websocket-sharp.dll</HintPath>
+ <HintPath>E:/Hoctap/unity/project/MasterOfEducation/Assets/Plugins/WebSocket/websocket-sharp.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
- <HintPath>C:/Program Files (x86)/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+ <HintPath>E:/Hoctap/unity/caidat/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -41,13 +41,13 @@ public class LoginManager : MonoBehaviour {
 		}
 		if ((API)int.Parse (w.text) == API.UsernameHasAlreadyExist) {
 			Debug.Log ("Username has already exist");
-			logText.text = "Tên tài khoản đã tồn tại";
+            logText.text = "Username has already exist";
 		} else if ((API)int.Parse (w.text) == API.RegisterFailed) {
 			Debug.Log ("Register failed");
-			logText.text = "Đăng Ký Thất Bại";
+            logText.text = "Register failed";
 		} else {
 			Debug.Log ("Register successful");
-			logText.text = "Đăng Ký Thành Công";
+            logText.text = "Register successful";
 		}
 	}
 
@@ -76,7 +76,7 @@ public class LoginManager : MonoBehaviour {
 			}
 		} else {
 			Debug.Log ("Login failed");
-			logText.text = "Đăng Nhập Thất Bại";
+            logText.text = "Login failed";
 		}
 	}
 

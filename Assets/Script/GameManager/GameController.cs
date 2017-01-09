@@ -57,6 +57,12 @@ public class GameController : MonoBehaviour {
 		_view.RPC ("ReadyPlayer", PhotonTargets.All);
 	}
 
+	void Update() {
+		if (Input.GetKeyDown(KeyCode.G)) {
+			this.ShowWin();
+		}
+	}
+
 	//Tao cac animal
 	void CreateAnimal() {
 		int index = PUNManager._instance.PlayerIndex;
@@ -432,6 +438,13 @@ public class GameController : MonoBehaviour {
 	[PunRPC]
 	private void PunShowWin() {
 		debug.text = "PLAYER WIN: " + _playerTurn;
+
+		if (PUNManager._instance.PlayerIndex == 0) {
+			PhotonNetwork.Disconnect ();
+			Application.LoadLevel ("Lobby");
+		}
 	}
+
+
 
 }

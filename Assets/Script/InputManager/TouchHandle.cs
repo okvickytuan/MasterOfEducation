@@ -69,10 +69,7 @@ public class TouchHandle : MonoBehaviour {
 				case TouchPhase.Canceled:
 					isTurning = false;
 					break;
-					}
-					
-					
-				
+				}
 				
 			}
 		}
@@ -112,7 +109,6 @@ public class TouchHandle : MonoBehaviour {
 						_oldPosX = Input.mousePosition.x;
 					}
 				}
-				
 			}
 		}
 
