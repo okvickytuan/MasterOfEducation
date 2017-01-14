@@ -5,7 +5,7 @@ public class KeepConnection : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		DontDestroyOnLoad (gameObject);
+		//DontDestroyOnLoad (gameObject);
 		StartCoroutine (SendRequest());
 		//SendRequest ();
 	}

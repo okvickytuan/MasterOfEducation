@@ -83,6 +83,8 @@ public class DiceManager : MonoBehaviour {
 		diceButton.SetDot(dot);
 		_canRoll = false;
 		_isRolling = false;
+
+		SoundManager._instance.PlayEffect (SoundConfig.ROLL_DONE_PATH, 1.0f);
 	}
 
 	internal void AutoRoll() {

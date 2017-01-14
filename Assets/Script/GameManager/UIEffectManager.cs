@@ -6,6 +6,8 @@ public class UIEffectManager : MonoBehaviour {
 
 	internal static UIEffectManager _instance;
 
+	public GameObject _winLose;
+
 	private PhotonView _view;
 	private RectTransform canvas;
 
@@ -48,12 +50,29 @@ public class UIEffectManager : MonoBehaviour {
 		_view.RPC ("PunShowPlayerTurnEffect", PhotonTargets.All, playerTurn);
 	}
 
+	internal void HidePlayerTurnEffect() {
+		_view.RPC ("PunHidePlayerTurnEffect", PhotonTargets.All);
+	}
+
 	[PunRPC]
-	private void PunShowPlayerTurnEffect(int playerTurn) {
+	internal void PunShowPlayerTurnEffect(int playerTurn) {
 		int playerUI = GetPlayerUI (playerTurn);
 
 		for (int i=0; i<4; i++) {
 			playerNameUI.FindChild("border_" + (i+1)).gameObject.SetActive((i+1) == playerUI);
+		}
+
+		if (playerTurn == PUNManager._instance.PlayerIndex + 1) {
+			GameController._instance.PlayerAnimal.ShowArrow();
+		} else {
+			GameController._instance.PlayerAnimal.HideArrow();
+		}
+	}
+
+	[PunRPC]
+	private void PunHidePlayerTurnEffect() {
+		for (int i=0; i<4; i++) {
+			playerNameUI.FindChild("border_" + (i+1)).gameObject.SetActive(false);
 		}
 	}
 
@@ -64,6 +83,32 @@ public class UIEffectManager : MonoBehaviour {
 			result = 4 + result;
 		}
 		return result;
+	}
+
+	internal void ShowWinLose(bool isWin) {
+		_winLose.SetActive (true);
+		_winLose.transform.FindChild (isWin ? "Victory" : "Defeat").gameObject.SetActive (true);
+
+		SoundManager._instance.PlayEffect (isWin ? SoundConfig.VICTORY_PATH : SoundConfig.DEFEAT_PATH, 1.0f);
+		StartCoroutine ("CoShowContinueButton");
+	}
+
+	private IEnumerator CoShowContinueButton() {
+		yield return new WaitForSeconds (1.5f);
+		_winLose.transform.FindChild ("Continue").gameObject.SetActive (true);
+		/*float timer = 0;
+		float time = 1.0f;
+		Image button = _winLose.transform.FindChild ("Continue").GetComponent<UnityEngine.UI.Image> ();
+
+		while (timer >= time) {
+			float offset = Time.deltaTime / time * 255.0f;
+			Color tmp = button.color;
+			tmp.a = tmp.a + (offset > 255.0f ? 255.0f : offset);
+			button.color = tmp;
+			
+			timer += Time.deltaTime;
+			yield return new WaitForFixedUpdate();
+		}*/
 	}
 
 }

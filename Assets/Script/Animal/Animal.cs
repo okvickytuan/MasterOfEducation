@@ -62,6 +62,8 @@ public class Animal : MonoBehaviour {
 		Vector3 euler = transform.eulerAngles;
 		euler.y = Random.Range (0, 360);
 		transform.eulerAngles = euler;
+
+		GameEffectManager._instance.CreateEffect ("Prefabs/Particle/visionBuff", transform.parent.position, 2.0f);
 	}
 
 	//Di chuyển các animal
@@ -109,12 +111,10 @@ public class Animal : MonoBehaviour {
 	}
 
 	protected IEnumerator StepByStepTo(int area, int areaIndex) {
+		//GameEffectManager._instance.TurnLight (false);
+
 		//Di chuyển từng bước 1 cho đến khi tới đích
 		while (CurrentArea != area || CurrentAreaIndex != areaIndex) {
-			/*int nextArea = (CurrentAreaIndex + 1) <= _stepPerArea ? 
-				CurrentArea : ((CurrentArea + 1) > 4 ? 1 : (CurrentArea + 1));
-			int nextAreaIndex = (CurrentAreaIndex + 1) <= _stepPerArea ? 
-				(CurrentAreaIndex + 1) : (CurrentAreaIndex + 1 - _stepPerArea);*/
 			int[] nextStep = GetNextArea(CurrentArea, CurrentAreaIndex);
 			//JumpTo(nextArea, nextAreaIndex);
 			_view.RPC ("JumpTo", PhotonTargets.All, nextStep[0], nextStep[1]);
@@ -122,7 +122,12 @@ public class Animal : MonoBehaviour {
 		}
 		if (CurrentArea == _destination [0] && CurrentAreaIndex == _destination [1]) {
 			GameController._instance.ShowWin();
-		} else if (moveCompleteEvt != null) {
+		} /*else if (moveCompleteEvt != null) {
+			moveCompleteEvt();
+		}*/
+		yield return new WaitForSeconds (2.0f);
+		//GameEffectManager._instance.TurnLight (true);
+		if (moveCompleteEvt != null && !GameController._instance.IsDoneGame) {
 			moveCompleteEvt();
 		}
 	}
@@ -143,7 +148,13 @@ public class Animal : MonoBehaviour {
 	}
 
 	//Đá thú về chuồng
-	protected void Kick(Animal player) {
+	protected IEnumerator Kick(Animal player) {
+		//Lightning effect
+		Vector3 lightningPos = new Vector3 (player.transform.position.x, player.transform.position.y + 8.5f,
+		                                   player.transform.position.z);
+		GameEffectManager._instance.CreateEffect ("Prefabs/Particle/lightning", lightningPos, 2.0f);
+		SoundManager._instance.PlayEffect (SoundConfig.LIGHTNING_PATH, 1.0f);
+		yield return new WaitForSeconds (2.0f);
 		player.GoToCage (player._playerIndex);
 	}
 
@@ -162,6 +173,26 @@ public class Animal : MonoBehaviour {
 		if (des.childCount > 1)
 			return des.GetComponentInChildren<Animal> ();
 		return null;
+	}
+
+	internal void ShowArrow() {
+		GetComponent<PhotonView> ().RPC ("PunShowArrow", PhotonTargets.All);
+	}
+
+	internal void HideArrow() {
+		GetComponent<PhotonView> ().RPC ("PunHideArrow", PhotonTargets.All);
+	}
+
+	[PunRPC]
+	private void PunShowArrow() {
+		Transform arrow = transform.FindChild ("arrow");
+		arrow.GetComponent<ParticleSystem> ().Play ();
+	}
+
+	[PunRPC]
+	private void PunHideArrow() {
+		Transform arrow = transform.FindChild ("arrow");
+		arrow.GetComponent<ParticleSystem> ().Stop ();
 	}
 
 }

@@ -4,7 +4,7 @@ using System.Collections;
 
 public class GameConfig {
 
-	//internal static string SERVER_URL = "http://1.52.64.52:19000/MOEWebservice/";
+	//internal static string SERVER_URL = "http://118.68.99.216:20000/MOEWebservice/";
 	internal static string SERVER_URL = "http://127.0.0.1:7000/MOEWebservice/";
 
 	internal static string LOGIN_URL = GameConfig.SERVER_URL + "Login/Login.php";

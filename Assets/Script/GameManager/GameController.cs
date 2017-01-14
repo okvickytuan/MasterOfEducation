@@ -32,6 +32,9 @@ public class GameController : MonoBehaviour {
 	private int[] playersRolls = new int[4] { 2, 2, 2, 2 };		//Lượt đổ xí ngầu mỗi người chơi (ban đầu có 2 lượt)
 
 	private Animal _playerAnimal;
+	internal Animal PlayerAnimal {
+		get { return _playerAnimal; }
+	}
 
 	internal PhotonView PunView {
 		get { return _view; }
@@ -43,6 +46,11 @@ public class GameController : MonoBehaviour {
 
 	internal bool[] CurrentAnswerResult {
 		get { return currentAnswerResult; }
+	}
+
+	private bool _isDoneGame = false;
+	internal bool IsDoneGame {
+		get { return _isDoneGame; }
 	}
 
 	void Awake() {
@@ -58,8 +66,8 @@ public class GameController : MonoBehaviour {
 	}
 
 	void Update() {
-		if (Input.GetKeyDown(KeyCode.G)) {
-			this.ShowWin();
+		if (Input.GetKeyDown (KeyCode.G)) {
+			ShowWin();
 		}
 	}
 
@@ -183,10 +191,10 @@ public class GameController : MonoBehaviour {
 	private void ChangeCurrentAnswer(int playerIndex, double time, bool result) {
 		currentAnswerTime [playerIndex] = time;
 		currentAnswerResult [playerIndex] = result;
-		//debug.text = "Players time: ";
-		//debug.text += "\n" + time;
-		for (int i=0; i<currentAnswerTime.Length; i++) {
-			//debug.text += "\n" + currentAnswerTime[i];
+
+		if (gameState == GameState.Ingame) {
+			SoundManager._instance.PlayEffect (result == true ? 
+				SoundConfig.ANSWER_RIGHT_PATH : SoundConfig.ANSWER_WRONG_PATH, 1.0f);
 		}
 	}
 
@@ -247,7 +255,8 @@ public class GameController : MonoBehaviour {
 				}
 				if (noOneAnswer == true) {		//Disconnect all
 					GameController._instance.debug.text = "Disconnect all player in room";
-					PhotonNetwork.Disconnect();
+					StartCoroutine (DisconnectToRoom());
+					UIEffectManager._instance.ShowWinLose (false);
 				} else {
 					for (int i=0; i<currentAnswerResult.Length; i++) {
 						if (currentAnswerTime[i] == minTime) {
@@ -258,7 +267,9 @@ public class GameController : MonoBehaviour {
 					_playerTurn = playerChosen;
 					firstPlayerTurn = _playerTurn;
 					gameState = GameState.Ingame;
-					//ShowQuestion();
+
+					UIEffectManager._instance.PunShowPlayerTurnEffect(_playerTurn);
+
 					RollDice();
 					debug.text = "Player first is: Player " + _playerTurn;
 				}
@@ -267,7 +278,9 @@ public class GameController : MonoBehaviour {
 			_playerTurn = playerChosen;
 			firstPlayerTurn = _playerTurn;
 			gameState = GameState.Ingame;
-			//ShowQuestion();
+
+			UIEffectManager._instance.PunShowPlayerTurnEffect(_playerTurn);
+
 			RollDice();
 			debug.text = "Player first is: Player " + _playerTurn;
 		}
@@ -373,7 +386,6 @@ public class GameController : MonoBehaviour {
 
 	//Đổ xí ngầu
 	private void RollDice() {
-		UIEffectManager._instance.ShowPlayerTurnEffect (_playerTurn);
 
 		_playerAnimal.AddMoveEvent (CheckToRollDice);
 		if (_playerTurn == PUNManager._instance.PlayerIndex+1) {
@@ -411,6 +423,7 @@ public class GameController : MonoBehaviour {
 	//Chuyển lượt chơi sang người kế tiếp
 	[PunRPC]
 	private void NextTurn() {
+
 		//Reset lượt đổ xí ngầu của người chơi cũ
 		if (playersRolls [_playerTurn - 1] == 0) {
 			playersRolls [_playerTurn - 1] = 1;
@@ -419,6 +432,9 @@ public class GameController : MonoBehaviour {
 		_playerTurn = _playerTurn == 4 ? 1 : _playerTurn+1;
 
 		ShowQuestion();
+
+		UIEffectManager._instance.PunShowPlayerTurnEffect (_playerTurn);
+
 	}
 
 	//Kiểm tra lượt đổ xí ngầu
@@ -437,14 +453,23 @@ public class GameController : MonoBehaviour {
 
 	[PunRPC]
 	private void PunShowWin() {
+		_isDoneGame = true;
+
 		debug.text = "PLAYER WIN: " + _playerTurn;
 
-		if (PUNManager._instance.PlayerIndex == 0) {
-			PhotonNetwork.Disconnect ();
-			Application.LoadLevel ("Lobby");
-		}
+		StartCoroutine (DisconnectToRoom ());
+
+		UIEffectManager._instance.ShowWinLose (_playerTurn == PUNManager._instance.PlayerIndex + 1);
 	}
 
+	private IEnumerator DisconnectToRoom() {
+		yield return new WaitForSeconds (0.5f);
+		PhotonNetwork.Disconnect ();
+	}
 
+	public void GoToLobby() {
+
+		Application.LoadLevel ("Lobby");
+	}
 
 }
